@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ashback"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/background_password_box"
+                android:elevation="4dp"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:id="@+id/typeGrp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:checkedButton="@id/RadioCredit"
+                    android:orientation="horizontal"
+                    android:theme="@style/WhiteCheck">
+
+                    <RadioButton
+                        android:id="@+id/RadioCredit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mm"
+                        android:text="Credit"
+                        android:textColor="@color/text_Color"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/RadioDebit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="@font/mm"
+                        android:text="Debit"
+                        android:textColor="@color/text_Color"
+                        android:textSize="18sp" />
+
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/transactionAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/mm"
+                    android:hint="Amount"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/text_Color"
+                    android:textSize="18sp"
+                    android:textCursorDrawable="@drawable/color_cursor"/>
+
+                <EditText
+                    android:id="@+id/transactionDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:cursorVisible="false"
+                    android:drawableRight="@drawable/ic_expand_more_black_24dp"
+                    android:focusable="false"
+                    android:fontFamily="@font/mm"
+                    android:hint="Date"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/text_Color"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/payeeMember"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="10dp"
+                    android:textAlignment="viewStart">
+
+                </Spinner>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/TransacSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/upload_btn"
+                android:fontFamily="@font/mm"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+
+                />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
