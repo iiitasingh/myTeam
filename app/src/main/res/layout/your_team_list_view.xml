@@ -9,10 +9,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+
         app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="14dp"
-        app:cardElevation="6dp">
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,8 +24,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgteam"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_gravity="center"
                 android:src="@drawable/user_1"
                 app:civ_border_color="@color/light_blue_primary_dark"
@@ -43,7 +43,7 @@
                 android:fontFamily="@font/mm"
                 android:text="Team2"
                 android:textColor="#555151"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

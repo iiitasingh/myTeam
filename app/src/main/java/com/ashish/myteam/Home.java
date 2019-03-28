@@ -116,7 +116,7 @@ public class Home extends AppCompatActivity {
 
         popupDial.setContentView(R.layout.activity_bottomappbar);
 
-        int width1 = (int) (popActivity.getResources().getDisplayMetrics().widthPixels * .8);
+        int width1 = (int) (popActivity.getResources().getDisplayMetrics().widthPixels * .85);
         int height1 = (int) (popActivity.getResources().getDisplayMetrics().heightPixels * 0.82);
         popupDial.getWindow().setLayout(width1, height1);
         popupDial.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -149,14 +149,14 @@ public class Home extends AppCompatActivity {
             bgp = data1.getString(data1.getColumnIndex("bl_grp"));
         }
 
-        MemEmail.setText(": " + Umail);
+        MemEmail.setText("Email: " + Umail);
         MemName.setText(nam);
         MemNknam.setText(niknam);
-        MemTeam.setText(": " + tnm);
-        MemDob.setText(": " + dob);
-        MemFood.setText(": " + food);
-        MemBgp.setText(": "+ bgp);
-        MemMob.setText(": "+ mob);
+        MemTeam.setText("Team: " + tnm);
+        MemDob.setText("DOB: " + dob);
+        MemFood.setText("Food: " + food);
+        MemBgp.setText("BGrp: "+ bgp);
+        MemMob.setText("Mob: "+ mob);
 
         Bitmap bitmap = BitmapFactory.decodeByteArray(userimg, 0, userimg.length);
         Usimg.setImageBitmap(bitmap);
@@ -182,7 +182,7 @@ public class Home extends AppCompatActivity {
 
         popupDial1.setContentView(R.layout.home_header);
 
-        int width1 = (int) (popActivity.getResources().getDisplayMetrics().widthPixels * .8);
+        int width1 = (int) (popActivity.getResources().getDisplayMetrics().widthPixels * .85);
         int height1 = (int) (popActivity.getResources().getDisplayMetrics().heightPixels * 0.82);
         popupDial1.getWindow().setLayout(width1, height1);
         popupDial1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -214,14 +214,14 @@ public class Home extends AppCompatActivity {
             bgppop2 = data1.getString(data1.getColumnIndex("bl_grp"));
         }
 
-        MemEmailpop2.setText(": " + Umailpop2);
+        MemEmailpop2.setText("Email: " + Umailpop2);
         MemNamepop2.setText(nampop2);
         MemNknampop2.setText(niknampop2);
-        MemTeampop2.setText(": " + tnmpop2);
+        MemTeampop2.setText("Team: " + tnmpop2);
         //MemDobpop2.setText(": " + dobpop2);
-        MemFoodpop2.setText(": " + foodpop2);
-        MemBgppop2.setText(": "+bgppop2);
-        MemMobpop2.setText(": "+mobpop2);
+        MemFoodpop2.setText("Food: " + foodpop2);
+        MemBgppop2.setText("BGrp: "+bgppop2);
+        MemMobpop2.setText("Mob: "+mobpop2);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date data = null;
@@ -230,7 +230,7 @@ public class Home extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        MemDobpop2.setText(": " +DateFormat.format("dd MMMM", data));
+        MemDobpop2.setText("DOB: " +DateFormat.format("dd MMMM", data));
 
         Bitmap bitmap = BitmapFactory.decodeByteArray(userimgpop2, 0, userimgpop2.length);
         Usimgpop2.setImageBitmap(bitmap);

@@ -206,8 +206,8 @@ public class UserProfile extends AppCompatActivity {
         editAadhar = (TextInputEditText) updateDialog.findViewById(R.id.name_edit_text7);
         updatebtn = (Button) updateDialog.findViewById(R.id.ProfileUpdatebtn);
 
-        int width1 = (int) (activity.getResources().getDisplayMetrics().widthPixels * .8);
-        int height1 = (int) (activity.getResources().getDisplayMetrics().heightPixels * 0.8);
+        int width1 = (int) (activity.getResources().getDisplayMetrics().widthPixels * .83);
+        int height1 = (int) (activity.getResources().getDisplayMetrics().heightPixels * 0.87);
         updateDialog.getWindow().setLayout(width1, height1);
         updateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         updateDialog.show();
@@ -257,7 +257,13 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                String date = year + "-" + month + "-" + day;
+                String date;
+                if(month <10) {
+                    date = year + "-0" + month + "-" + day;
+                }
+                else {
+                    date = year + "-" + month + "-" + day;
+                }
                 editDob.setText(date);
             }
         };

@@ -10,15 +10,16 @@
     android:background="@drawable/ashback">
 
     <TextView
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Your Events"
         android:fontFamily="@font/mmedium"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="20sp"
         />
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"

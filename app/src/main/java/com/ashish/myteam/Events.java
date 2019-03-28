@@ -18,20 +18,24 @@ public class Events extends AppCompatActivity {
     ViewPager viewPager;
     TabPageAdapter pageAdapter;
     String profileMail;
+    Bundle b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events);
 
+        profileMail = getIntent().getStringExtra("Email");
+        b = new Bundle();
+        b.putString("edttext", profileMail);
+
         tabLayout = findViewById(R.id.tablayout);
         comingEvent = findViewById(R.id.upcoming);
         previousEvent = findViewById(R.id.previous);
         viewPager = findViewById(R.id.viewPager);
 
-        pageAdapter = new TabPageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        pageAdapter = new TabPageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),b);
         viewPager.setAdapter(pageAdapter);
-        profileMail = getIntent().getStringExtra("Email");
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -50,22 +54,19 @@ public class Events extends AppCompatActivity {
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-//        Bundle bundle = new Bundle();
-//        bundle.putString("edttext", "ABcd");
-//        // set Fragmentclass Arguments
-//        UpcomingEvents upcomingEvent = new UpcomingEvents();
-//        upcomingEvent.setArguments(bundle);
     }
 
 
     public class TabPageAdapter extends FragmentPagerAdapter {
 
         private int numTabs;
+        private Bundle bund;
 
         //String profileMail;
-        public TabPageAdapter(FragmentManager fm, int numTabs) {
+        public TabPageAdapter(FragmentManager fm, int numTabs, Bundle bundle) {
             super(fm);
             this.numTabs = numTabs;
+            this.bund = bundle;
         }
 
         @Override
@@ -74,12 +75,11 @@ public class Events extends AppCompatActivity {
             switch (position) {
                 case 0:
                     fragment = new UpcomingEvents();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("edttext", "abc");
-                    fragment.setArguments(bundle);
+                    fragment.setArguments(bund);
                     break;
                 case 1:
                     fragment = new PreviousEvents();
+                    fragment.setArguments(bund);
                     break;
                 default:
                     fragment = null;

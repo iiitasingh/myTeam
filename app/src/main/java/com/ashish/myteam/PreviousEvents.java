@@ -19,13 +19,16 @@ public class PreviousEvents extends Fragment {
     public PreviousEvents() {
         // Required empty public constructor
     }
-
+    String mail;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_previous_events, container, false);
+        View previousVieew = inflater.inflate(R.layout.fragment_previous_events, container, false);
+
+        mail = getArguments().getString("edttext");
+
+        return previousVieew;
     }
 
 }

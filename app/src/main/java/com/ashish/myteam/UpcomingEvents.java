@@ -26,7 +26,7 @@ public class UpcomingEvents extends Fragment {
     ArrayList<Events_Card> cardList;
     ListView eventlist;
     Event_List_Adapter adapter;
-    String mail,teamname;
+    String mail,teamName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,14 +37,14 @@ public class UpcomingEvents extends Fragment {
         mail = getArguments().getString("edttext");
 
 
-        Cursor teamnm = MainActivity.db.getdata("SELECT team FROM table_user WHERE email = '"+mail+"'");
-        if(teamnm.getCount() == 0) {
+        Cursor teamCursor = MainActivity.db.getdata("SELECT team FROM table_user WHERE email = '"+mail+"'");
+        if(teamCursor.getCount() == 0) {
             Toast.makeText(getActivity(), "There are no team for this mail!",Toast.LENGTH_LONG).show();
         }
         else {
-            while(teamnm.moveToFirst()){
-                teamname = teamnm.getString(0);
-            }
+            teamCursor.moveToFirst();
+            teamName = teamCursor.getString(teamCursor.getColumnIndex("team"));
+
         }
 
         cardList = new ArrayList<>();
@@ -60,7 +60,7 @@ public class UpcomingEvents extends Fragment {
                 String evtDesc = eventDetails.getString(3);
                 String evtDate = eventDetails.getString(4);
                 //byte[] img = eventDetails.getBlob(1);
-                cardList.add(new Events_Card(evtname,mail,evtDesc,evtDate));
+                cardList.add(new Events_Card(evtname,teamName,evtDesc,evtDate));
             }
             adapter = new Event_List_Adapter(getActivity(), R.layout.event_list_template, cardList);
             eventlist.setAdapter(adapter);

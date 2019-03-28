@@ -34,7 +34,7 @@
                     android:fontFamily="@font/ml"
                     android:text="Welcome Nick Name"
                     android:textColor="@color/white"
-                    android:textSize="26sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/teamNm"
@@ -100,7 +100,7 @@
                             android:fontFamily="@font/mm"
                             android:text="Team"
                             android:textColor="#6f6f6f"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -137,7 +137,7 @@
                             android:fontFamily="@font/mm"
                             android:text="Events"
                             android:textColor="#6f6f6f"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -174,7 +174,7 @@
                             android:fontFamily="@font/mm"
                             android:text="Birthdays"
                             android:textColor="#6f6f6f"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -211,7 +211,7 @@
                             android:fontFamily="@font/mm"
                             android:text="Add Event"
                             android:textColor="#6f6f6f"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -245,6 +245,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
+                            android:fontFamily="@font/mm"
                             android:text="Transactions"
                             android:textColor="#6f6f6f"
                             android:textSize="18sp" />
@@ -280,8 +281,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:text="Calendar"
+                            android:fontFamily="@font/mm"
                             android:textColor="#6f6f6f"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 

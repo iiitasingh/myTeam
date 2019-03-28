@@ -126,25 +126,17 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                String date = year + "-" + month + "-" + day;
+                String date;
+                if(month <10) {
+                    date = year + "-0" + month + "-" + day;
+                }
+                else {
+                    date = year + "-" + month + "-" + day;
+                }
                 transDate.setText(date);
             }
         };
 
-//        transacSubmit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String money = amount.getText().toString().trim();
-//                String date = transDate.getText().toString().trim();
-//                int myNum = 0;
-//
-////                try {
-////                    myNum = Integer.parseInt(amount.getText().toString());
-////                } catch(NumberFormatException nfe) {
-////                    Toast.makeText(AddTransaction.this, "could not parse"+ nfe, Toast.LENGTH_LONG).show();
-////                }
-//            }
-//        });
 
         transacSubmit.setOnClickListener(new View.OnClickListener() {
 

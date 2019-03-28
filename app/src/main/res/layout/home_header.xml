@@ -41,7 +41,7 @@
                 android:gravity="center"
                 android:text="Member Name"
                 android:textColor="@color/white"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
             <TextView
                 android:id="@+id/MemNknam"
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                 android:gravity="center"
                 android:text="Nick Name"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,67 +59,6 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
                 android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="30dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/ml"
-                        android:gravity="start"
-                        android:text="Email"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/ml"
-                        android:gravity="start"
-                        android:text="Team"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/ml"
-                        android:gravity="start"
-                        android:text="DOB"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/ml"
-                        android:gravity="start"
-                        android:text="Food"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/ml"
-                        android:gravity="start"
-                        android:text="Mob"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/ml"
-                        android:gravity="start"
-                        android:text="B-Grp"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -135,7 +74,7 @@
                         android:gravity="start"
                         android:text="Mail"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/MemTeam"
@@ -145,7 +84,7 @@
                         android:gravity="start"
                         android:text="Team"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/MemDob"
@@ -155,7 +94,7 @@
                         android:gravity="start"
                         android:text="DOB"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/MemFood"
@@ -165,7 +104,7 @@
                         android:gravity="start"
                         android:text="Food"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/MemMob"
@@ -175,7 +114,7 @@
                         android:gravity="start"
                         android:text="Mobile No"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
                     <TextView
                         android:id="@+id/MemBgp"
                         android:layout_width="match_parent"
@@ -184,7 +123,7 @@
                         android:gravity="start"
                         android:text="B-Grp"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                 </LinearLayout>
             </LinearLayout>
