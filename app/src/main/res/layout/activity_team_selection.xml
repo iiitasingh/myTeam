@@ -22,8 +22,8 @@
         <ImageView
             android:id="@+id/Applogo"
             android:src="@drawable/ic_teamwork_32"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_gravity="start|center_vertical" />
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:text="@string/teamSelectionTeam"
             android:textColor="@color/white"
-            android:textSize="26sp"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
@@ -77,6 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:textSize="14sp"
                 android:text="@string/registerTeam"
                 android:textColor="@color/white" />
 
@@ -92,8 +93,8 @@
             app:backgroundTint="@android:color/transparent"
             app:borderWidth="0dp"
             app:elevation="6dp"
-            app:fabElevation="10dp"
-            app:fabCustomSize="60dp"
+            app:fabElevation="6dp"
+            app:fabCustomSize="56dp"
             app:layout_anchor="@id/homebottomappbar"
             app:useCompatPadding="true" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -63,7 +63,7 @@
                         android:padding="10dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/text_Color"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                         android:scrollbars="vertical"
                         android:textColor="@color/black"
                         android:textColorHint="@color/text_Color"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -120,7 +120,7 @@
                         android:scrollbars="vertical"
                         android:textColor="@color/black"
                         android:textColorHint="@color/text_Color"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -160,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginEnd="9dp"
+                        android:layout_marginEnd="10dp"
                         android:theme="@style/WhiteCheck" />
                 </RelativeLayout>
 
@@ -189,8 +189,8 @@
 
                         <ImageButton
                             android:id="@+id/eventAddImgBtn"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"

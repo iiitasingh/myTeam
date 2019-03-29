@@ -134,7 +134,8 @@ public class AddEvent extends AppCompatActivity {
                     if(val >0)
                     {
                         Toast.makeText(AddEvent.this, "Event Created", Toast.LENGTH_LONG).show();
-                        Intent events = new Intent(AddEvent.this,Events.class);
+                        Intent events = new Intent(AddEvent.this,list_test.class);
+                        events.putExtra("UserEmail",eventOwner);
                         startActivity(events);
                         finish();
                     }

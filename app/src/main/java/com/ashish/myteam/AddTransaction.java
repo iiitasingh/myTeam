@@ -32,7 +32,6 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
     RadioButton radioDebit, radioCredit;
     Button transacSubmit;
     ArrayList<String> memberNames, eventNames;
-    String[] country = {"India", "USA", "China", "Japan", "Other"};
     String transacMode,spinnerItem;
     private DatePickerDialog.OnDateSetListener mDateSet;
     int userid;

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -26,7 +27,9 @@ public class UpcomingEvents extends Fragment {
     ArrayList<Events_Card> cardList;
     ListView eventlist;
     Event_List_Adapter adapter;
-    String mail,teamName;
+    String mail;
+    String teamName;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +51,7 @@ public class UpcomingEvents extends Fragment {
         }
 
         cardList = new ArrayList<>();
-        Cursor eventDetails = MainActivity.db.getdata("SELECT * FROM table_event");
+        Cursor eventDetails = MainActivity.db.getdata("SELECT * FROM table_event WHERE event_date >= date('now') ORDER BY event_date");
         cardList.clear();
         if(eventDetails.getCount() == 0) {
             adapter = new Event_List_Adapter(getActivity(), R.layout.event_list_template, cardList);
@@ -63,8 +66,8 @@ public class UpcomingEvents extends Fragment {
                 cardList.add(new Events_Card(evtname,teamName,evtDesc,evtDate));
             }
             adapter = new Event_List_Adapter(getActivity(), R.layout.event_list_template, cardList);
-            eventlist.setAdapter(adapter);
         }
+        eventlist.setAdapter(adapter);
 
         return v;
     }

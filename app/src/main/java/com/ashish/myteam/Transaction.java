@@ -32,7 +32,7 @@ public class Transaction extends AppCompatActivity {
 
         profileOwner = getIntent().getStringExtra("Email");
         authorized = new ArrayList<>();
-        authorized.add("singh.ashish3104@gmail");
+        authorized.add("ashish-za.singh@ubs.com");
 
         TransTabLayout = findViewById(R.id.TransactionTablayout);
         debit = findViewById(R.id.debits);

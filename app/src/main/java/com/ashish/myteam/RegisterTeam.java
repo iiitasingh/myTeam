@@ -48,7 +48,7 @@ public class RegisterTeam extends AppCompatActivity {
                         if (res) {
                             Toast.makeText(RegisterTeam.this, "You already registered a Team", Toast.LENGTH_SHORT).show();
                         } else {
-                            long val = db1.addTeam(teamname, mail, pn);
+                            long val = db1.addTeam(teamname.toUpperCase(), mail, pn);
                             if (val > 0) {
                                 Toast.makeText(RegisterTeam.this, "Registration successful", Toast.LENGTH_SHORT).show();
                                 Intent moveselectTeam = new Intent(RegisterTeam.this, teamSelection.class);

@@ -33,7 +33,7 @@ public class BirthdayCalender extends AppCompatActivity {
     TextView current;
     Calendar cal;
     ListView birthdays;
-    ArrayList<BirthdayList> birthdayList;
+    ArrayList<BirthdayList> birthdayList,evenCalenderList;
     ArrayList<String> names;
     private String[] dob_arr = {};
 
@@ -63,10 +63,50 @@ public class BirthdayCalender extends AppCompatActivity {
                 birthdayList.add(new BirthdayList(name, dob));
             }
         }
+        evenCalenderList = new ArrayList<BirthdayList>();
+        Cursor event_list = MainActivity.db.getdata("SELECT event_name,event_date FROM table_event");
+        evenCalenderList.clear();
+        if (event_list.getCount() == 0) {
+            Toast.makeText(BirthdayCalender.this, "No Data", Toast.LENGTH_SHORT).show();
+        } else {
+            while (event_list.moveToNext()) {
+                String name = event_list.getString(0);
+                String dob = event_list.getString(1);
+                evenCalenderList.add(new BirthdayList(name, dob));
+            }
+        }
 
         setEvent(birthdayList);
+        setEvent(evenCalenderList);
 
-        // define a listener to receive callbacks when certain events happen.
+        //////////////////   Checking for today's Date   //////////////////
+        Date today = Calendar.getInstance().getTime();
+        List<Event> events = compactCalendar.getEvents(today);
+        names = new ArrayList<String>();
+        if (events.size() > 0) {
+
+            names.clear();
+            //Toast.makeText(BirthdayCalender.this, "Happy Birthday " + events.get(0).getData(), Toast.LENGTH_SHORT).show();
+            for (int i = 0; i<events.size();i++)
+            {
+                Event ash = events.get(i);
+                names.add("Happy Birthday "+ash.getData().toString());
+            }
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                    BirthdayCalender.this,
+                    android.R.layout.simple_list_item_1,
+                    names );
+
+            birthdays.setAdapter(arrayAdapter);
+
+        }
+        else {
+            birthdays.setAdapter(null);
+        }
+
+        /////////   define a listener to receive callbacks when certain events happen.   ////////////////
+
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {

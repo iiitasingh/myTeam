@@ -47,7 +47,7 @@
                 android:padding="8dp"
                 android:textColor="#212427"
                 android:textColorHint="#7C7F81"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/signupTeamPin"
@@ -66,6 +66,7 @@
                 android:maxLines="1"
                 android:padding="8dp"
                 android:textColorHint="#7C7F81"
+                android:textSize="14sp"
                 android:textCursorDrawable="@drawable/color_cursor" />
 
             <EditText
@@ -81,10 +82,11 @@
                 android:gravity="left"
                 android:hint="@string/name"
                 android:inputType="text"
-                android:maxLength="18"
+                android:maxLength="25"
                 android:maxLines="1"
                 android:padding="8dp"
                 android:textColorHint="#7C7F81"
+                android:textSize="14sp"
                 android:textCursorDrawable="@drawable/color_cursor" />
 
             <EditText
@@ -103,6 +105,7 @@
                 android:maxLength="10"
                 android:maxLines="1"
                 android:padding="8dp"
+                android:textSize="14sp"
                 android:textColorHint="#7C7F81"
                 android:textCursorDrawable="@drawable/color_cursor" />
 
@@ -119,9 +122,10 @@
                 android:gravity="left"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                android:maxLength="22"
+                android:maxLength="35"
                 android:maxLines="1"
                 android:padding="8dp"
+                android:textSize="14sp"
                 android:textColorHint="#7C7F81"
                 android:textCursorDrawable="@drawable/color_cursor" />
 
@@ -140,6 +144,7 @@
                 android:inputType="textPassword"
                 android:maxLength="20"
                 android:maxLines="1"
+                android:textSize="14sp"
                 android:padding="8dp"
                 android:textColorHint="#7C7F81"
                 android:textCursorDrawable="@drawable/color_cursor" />
@@ -161,6 +166,7 @@
                 android:maxLength="20"
                 android:maxLines="1"
                 android:padding="8dp"
+                android:textSize="14sp"
                 android:textColorHint="#7C7F81"
                 android:textCursorDrawable="@drawable/color_cursor" />
 
@@ -177,7 +183,7 @@
                 android:text="@string/signup"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -197,6 +203,7 @@
                     android:fontFamily="@font/mm"
                     android:gravity="center"
                     android:padding="16dp"
+                    android:textSize="14sp"
                     android:text="@string/login_text"
                     android:textColor="#7C7F81" />
 
