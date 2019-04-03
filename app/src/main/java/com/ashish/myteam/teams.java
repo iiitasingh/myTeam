@@ -4,10 +4,12 @@ public class teams {
 
     byte[] image;
     String name;
+    String email;
 
-    public teams(byte[] image, String name) {
+    public teams(byte[] image, String name ,String email) {
         this.image = image;
         this.name = name;
+        this.email = email;
     }
 
     public byte[] getImage() {
@@ -24,5 +26,13 @@ public class teams {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

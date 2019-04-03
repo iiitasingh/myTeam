@@ -258,12 +258,18 @@ public class UserProfile extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 String date;
-                if(month <10) {
-                    date = year + "-0" + month + "-" + day;
+                String dayS = String.valueOf(day);
+                String monthS = String.valueOf(month);
+                if(month < 10 )
+                {
+                    monthS = "0" + monthS;
                 }
-                else {
-                    date = year + "-" + month + "-" + day;
+                if(day < 10 )
+                {
+                    dayS = "0" + dayS;
                 }
+
+                date = year + "-" + monthS + "-" + dayS;
                 editDob.setText(date);
             }
         };

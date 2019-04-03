@@ -19,15 +19,18 @@ public class Events extends AppCompatActivity {
     TabPageAdapter pageAdapter;
     String profileMail;
     Bundle b;
+    User owner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events);
 
-        profileMail = getIntent().getStringExtra("Email");
+        owner = (User) getIntent().getSerializableExtra("USER");
+        profileMail = owner.getUemail();
+
         b = new Bundle();
-        b.putString("edttext", profileMail);
+        b.putSerializable("USER_B", owner);
 
         tabLayout = findViewById(R.id.tablayout);
         comingEvent = findViewById(R.id.upcoming);

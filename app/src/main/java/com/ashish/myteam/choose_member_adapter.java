@@ -16,10 +16,10 @@ import java.util.ArrayList;
 public class choose_member_adapter extends BaseAdapter {
 
     Context context;
-    ArrayList<String> data;
+    ArrayList<teamMemberObject> data;
     private static LayoutInflater inflater = null;
 
-    public choose_member_adapter(Context context, ArrayList<String> data) {
+    public choose_member_adapter(Context context, ArrayList<teamMemberObject> data) {
 
         this.context = context;
         this.data = data;
@@ -65,7 +65,7 @@ public class choose_member_adapter extends BaseAdapter {
         else {
             holder = (ViewHolder) vi.getTag();
         }
-        holder.checkMember.setText(data.get(position));
+        holder.checkMember.setText(data.get(position).getName());
         return vi;
     }
 }

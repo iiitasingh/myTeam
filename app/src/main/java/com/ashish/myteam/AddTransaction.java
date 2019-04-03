@@ -27,19 +27,27 @@ import java.util.ArrayList;
 public class AddTransaction extends AppCompatActivity implements OnItemSelectedListener {
 
     RadioGroup transacType;
-    EditText amount, transDate;
+    EditText amount, transDate, transDesc;
     Spinner payee;
     RadioButton radioDebit, radioCredit;
     Button transacSubmit;
-    ArrayList<String> memberNames, eventNames;
-    String transacMode,spinnerItem;
+    ArrayList<Long> membersIds;
+    ArrayList<String> memberNames;
+    ArrayList<String> eventNames;
+    ArrayList<String> eventMembers;
+    String transacMode, payeeName, eventNm, eventMems;
     private DatePickerDialog.OnDateSetListener mDateSet;
-    int userid;
+    User addUserTrans;
+    ArrayList<String> authorized;
+    String[] payeeStringArray;
+    String[] payeeArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_transaction);
+
+        addUserTrans = (User) getIntent().getSerializableExtra("USER");
 
         transacType = (RadioGroup) findViewById(R.id.typeGrp);
         amount = (EditText) findViewById(R.id.transactionAmount);
@@ -48,26 +56,43 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
         radioDebit = (RadioButton) findViewById(R.id.RadioDebit);
         radioCredit = (RadioButton) findViewById(R.id.RadioCredit);
         transacSubmit = (Button) findViewById(R.id.TransacSubmit);
+        transDesc = (EditText) findViewById(R.id.transactionDesc);
         memberNames = new ArrayList<>();
         eventNames = new ArrayList<>();
+        membersIds = new ArrayList<>();
+        eventMembers = new ArrayList<>();
+        payeeArray = new String[2];
 
-        Cursor cursor = MainActivity.db.getdata("SELECT name FROM table_user");
+        payeeArray[0] = addUserTrans.getId().toString();
+
+        authorized = new ArrayList<>();
+        authorized.add("ashish-za.singh@ubs.com");
+
+        Cursor cursor = MainActivity.db.getdata("SELECT ID,name FROM table_user WHERE team = '" + addUserTrans.getUteam() + "'");
         memberNames.clear();
+        membersIds.clear();
         if (cursor.getCount() == 0) {
             Toast.makeText(AddTransaction.this, "No Member to show", Toast.LENGTH_LONG).show();
         } else {
             while (cursor.moveToNext()) {
-                memberNames.add(cursor.getString(0));
+                Long id = cursor.getLong(0);
+                String name = cursor.getString(1);
+                memberNames.add(name);
+                membersIds.add(id);
             }
         }
 
-        Cursor cursor1 = MainActivity.db.getdata("SELECT event_name FROM table_event");
+        Cursor cursor1 = MainActivity.db.getdata("SELECT event_name, event_members FROM table_event WHERE event_owner = '" + addUserTrans.getUemail() + "'");
         eventNames.clear();
+        eventMembers.clear();
         if (cursor1.getCount() == 0) {
             Toast.makeText(AddTransaction.this, "No Event to show", Toast.LENGTH_LONG).show();
         } else {
             while (cursor1.moveToNext()) {
-                eventNames.add(cursor1.getString(0));
+                String name = cursor1.getString(0);
+                String members = cursor1.getString(1);
+                eventNames.add(name);
+                eventMembers.add(members);
             }
         }
         transacType.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -82,22 +107,21 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
                     payee.setAdapter(dataAdapter);
                     transacMode = "debit";
                 } else {
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(AddTransaction.this,
+                    ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(AddTransaction.this,
                             R.layout.spinner_text, memberNames);
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    payee.setAdapter(dataAdapter);
+                    dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    payee.setAdapter(dataAdapter1);
                     transacMode = "credit";
                 }
             }
 
         });
 
-        if (transacType.getCheckedRadioButtonId() == radioCredit.getId())
-        {
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(AddTransaction.this,
+        if (transacType.getCheckedRadioButtonId() == radioCredit.getId()) {
+            ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(AddTransaction.this,
                     R.layout.spinner_text, memberNames);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            payee.setAdapter(dataAdapter);
+            dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            payee.setAdapter(dataAdapter2);
             transacMode = "credit";
         }
 
@@ -115,7 +139,7 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
                         AddTransaction.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mDateSet,
-                        year,month,day);
+                        year, month, day);
                 dobPicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dobPicker.show();
             }
@@ -126,12 +150,16 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 String date;
-                if(month <10) {
-                    date = year + "-0" + month + "-" + day;
+                String dayS = String.valueOf(day);
+                String monthS = String.valueOf(month);
+                if (month < 10) {
+                    monthS = "0" + monthS;
                 }
-                else {
-                    date = year + "-" + month + "-" + day;
+                if (day < 10) {
+                    dayS = "0" + dayS;
                 }
+
+                date = year + "-" + monthS + "-" + dayS;
                 transDate.setText(date);
             }
         };
@@ -142,32 +170,76 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
             @Override
             public void onClick(View v) {
 
-                userid = 10;
-                String money = amount.getText().toString().trim();
-                String date = transDate.getText().toString().trim();
-                //Toast.makeText(AddTransaction.this, " "+spinnerItem +" "+date+" "+money, Toast.LENGTH_LONG).show();
-                if(money.length() > 0 && date.length() > 0)
-                {
-                    int creditamount = Integer.parseInt(money);
-                    long val = MainActivity.db.addTransaction(userid,creditamount,date,transacMode);
-                    if(val >0)
-                    {
-                        Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_LONG).show();
-                        Intent events = new Intent(AddTransaction.this,Transaction.class);
-                        startActivity(events);
-                        finish();
+                if (transacType.getCheckedRadioButtonId() == radioCredit.getId()) {
+                    if (authorized.contains(addUserTrans.getUemail())) {
+                        String money = amount.getText().toString().trim();
+                        String date = transDate.getText().toString().trim();
+                        String desc = transDesc.getText().toString().trim();
+                        if (money.length() > 0 && date.length() > 0 && desc.length() > 5) {
+                            int creditamount = Integer.parseInt(money);
+                            long transID = MainActivity.db.newTransaction(payeeName, creditamount, date, transacMode, desc);
+                            if (transID > 0) {
+                                Long Val = MainActivity.db.addTransaction(payeeArray, String.valueOf(transID));
+                                if (Val > 0) {
+                                    Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_LONG).show();
+                                    Intent events = new Intent(AddTransaction.this, Transaction.class);
+                                    Bundle args = new Bundle();
+                                    args.putSerializable("USER", addUserTrans);
+                                    events.putExtras(args);
+                                    startActivity(events);
+                                    finish();
+                                } else {
+                                    Toast.makeText(AddTransaction.this, "Failed", Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Toast.makeText(AddTransaction.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                            }
+                        } else if (money.length() <= 0) {
+                            Toast.makeText(AddTransaction.this, "Add Some Money", Toast.LENGTH_LONG).show();
+                        } else if (date.length() <= 0) {
+                            Toast.makeText(AddTransaction.this, "Select Transaction Date", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(AddTransaction.this, "Write Some Description", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(AddTransaction.this, "You are not authorized to add a Credit transaction ", Toast.LENGTH_SHORT).show();
                     }
-                    else {
-                        Toast.makeText(AddTransaction.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                } else {
+                    if (eventNames.size() > 0) {
+                        String money = amount.getText().toString().trim();
+                        String date = transDate.getText().toString().trim();
+                        String desc = transDesc.getText().toString().trim();
+                        if (money.length() > 0 && date.length() > 0 && desc.length() > 5) {
+                            int creditamount = Integer.parseInt(money);
+                            long transID = MainActivity.db.newTransaction(eventNm, creditamount, date, transacMode, desc);
+                            if (transID > 0) {
+                                Long Val = MainActivity.db.addTransaction(payeeStringArray, String.valueOf(transID));
+                                if (Val > 0) {
+                                    Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_LONG).show();
+                                    Intent events = new Intent(AddTransaction.this, Transaction.class);
+                                    Bundle args = new Bundle();
+                                    args.putSerializable("USER", addUserTrans);
+                                    events.putExtras(args);
+                                    startActivity(events);
+                                    finish();
+                                }
+                                else {
+                                    Toast.makeText(AddTransaction.this, "Failed", Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Toast.makeText(AddTransaction.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                            }
+                        } else if (money.length() <= 0) {
+                            Toast.makeText(AddTransaction.this, "Add Some Money", Toast.LENGTH_LONG).show();
+                        } else if (date.length() <= 0) {
+                            Toast.makeText(AddTransaction.this, "Select Transaction Date", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(AddTransaction.this, "Write Some Description", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(AddTransaction.this, "You haven't created any event!", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else if(money.length() <=0){
-                    Toast.makeText(AddTransaction.this, "Add Some Money", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(AddTransaction.this, "Select Transaction Date", Toast.LENGTH_LONG).show();
-                }
-
             }
         });
 
@@ -176,8 +248,21 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
-        spinnerItem = parent.getItemAtPosition(position).toString();
+        if (transacType.getCheckedRadioButtonId() == radioCredit.getId()) {
+            eventMems = "";
+            eventNm = "";
+            payeeName = parent.getItemAtPosition(position).toString();
+            payeeArray[1] = membersIds.get(position).toString();
+        } else {
+            payeeArray[1] = "";
+            payeeName = "";
+            eventNm = parent.getItemAtPosition(position).toString();
+            eventMems = eventMembers.get(position).toString();
+            payeeStringArray = eventMems.split(",", 0);
+        }
+
     }
+
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }

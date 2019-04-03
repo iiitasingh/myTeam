@@ -23,21 +23,21 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class list_test extends Activity {
 
-    ImageView yourImage,teamIcon,addEvent,birthdayImg,EventsImg,transactionImg;
-    TextView yourName,teamName,teamName1,birthdayTxt,addEventTxt,EventsTxt,transactionTxt;
+    ImageView yourImage, teamIcon, addEvent, birthdayImg, EventsImg, transactionImg, addTransacImg;
+    TextView yourName, teamName, teamName1, birthdayTxt, addEventTxt, EventsTxt, transactionTxt, addTransacTxt;
     SwipeRefreshLayout swipeRefresh;
-    String nknm;
-    String tm;
     String TempHolder;
-    String[] TeamMailHolder;
     byte[] usrImg;
     Dialog logoutProfile;
     Animation atg;
-
+    User profileUser;
     private Session session;
 
     @Override
@@ -46,50 +46,87 @@ public class list_test extends Activity {
         setContentView(R.layout.listtest);
 
         session = new Session(this);
-        if(!session.loggedin()){
+        if (!session.loggedin()) {
             Logout();
         }
-
+        TempHolder = getIntent().getStringExtra("UserEmail");
         atg = AnimationUtils.loadAnimation(this, R.anim.atg);
 
         logoutProfile = new Dialog(this);
-        addEvent = (ImageView)findViewById(R.id.addEvent);
-        yourImage = (ImageView)findViewById(R.id.userImg);
-        teamIcon = (ImageView)findViewById(R.id.teamIcon);
-        yourName = (TextView)findViewById(R.id.nickName);
-        teamName = (TextView)findViewById(R.id.teamNm);
+        addEvent = (ImageView) findViewById(R.id.addEvent);
+        yourImage = (ImageView) findViewById(R.id.userImg);
+        teamIcon = (ImageView) findViewById(R.id.teamIcon);
+        yourName = (TextView) findViewById(R.id.nickName);
+        teamName = (TextView) findViewById(R.id.teamNm);
         teamName1 = (TextView) findViewById(R.id.teamNm1);
-        birthdayImg = (ImageView)findViewById(R.id.birthdayImg);
-        birthdayTxt = (TextView)findViewById(R.id.birthdayTxt);
-        EventsImg = (ImageView)findViewById(R.id.EventsImg);
+        birthdayImg = (ImageView) findViewById(R.id.birthdayImg);
+        birthdayTxt = (TextView) findViewById(R.id.birthdayTxt);
+        EventsImg = (ImageView) findViewById(R.id.EventsImg);
         EventsTxt = (TextView) findViewById(R.id.EventsTxt);
         addEventTxt = (TextView) findViewById(R.id.addEventTxt);
-        transactionImg = (ImageView)findViewById(R.id.transactionImg);
+        transactionImg = (ImageView) findViewById(R.id.transactionImg);
         transactionTxt = (TextView) findViewById(R.id.transactionTxt);
+        addTransacImg = (ImageView) findViewById(R.id.addTransacImg);
+        addTransacTxt = (TextView) findViewById(R.id.addTransacTxt);
 
-        swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
 
-        TempHolder = getIntent().getStringExtra("UserEmail");
+
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+
+        Cursor Ucursor = MainActivity.db.getdata("SELECT * FROM table_user WHERE email = '" + TempHolder + "'");
+        if (Ucursor.getCount() == 0) {
+            Toast.makeText(list_test.this, "No data with this mail", Toast.LENGTH_LONG).show();
+        } else {
+            Ucursor.moveToFirst();
+            Long id = Ucursor.getLong(0);
+            String uemail = Ucursor.getString(1);
+            String uaadhaar = Ucursor.getString(2);
+            String uname = Ucursor.getString(3);
+            String unick_name = Ucursor.getString(4);
+            String uteam = Ucursor.getString(5);
+            String udob = Ucursor.getString(7);
+            String ufood = Ucursor.getString(8);
+            String umobile = Ucursor.getString(9);
+            String ubgrp = Ucursor.getString(10);
+            String upan = Ucursor.getString(11);
+            String uevents = Ucursor.getString(12);
+            byte[] uimage = Ucursor.getBlob(6);
+            String utrans = Ucursor.getString(13);
+            String uabout = Ucursor.getString(14);
+
+            profileUser = new User(id, uemail, uaadhaar, uname, unick_name, uteam, udob, ufood, umobile, ubgrp, upan, uevents, uimage, utrans, uabout);
+        }
+
+        yourName.setText("Welcome " + profileUser.getUnick_name());
+        teamName.setText(profileUser.getUteam());
+        teamName1.setText(profileUser.getUteam());
+        usrImg = profileUser.getUimage();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(usrImg, 0, usrImg.length);
+        yourImage.setImageBitmap(bitmap);
 
         yourImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logoutPopup(list_test.this,TempHolder);
+                logoutPopup(list_test.this, TempHolder);
             }
         });
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent MemIntent = new Intent(list_test.this,AddEvent.class);
-                MemIntent.putExtra("Email",TempHolder);
+                Intent MemIntent = new Intent(list_test.this, AddEvent.class);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                MemIntent.putExtras(args);
                 startActivity(MemIntent);
             }
         });
         addEventTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent MemIntent = new Intent(list_test.this,AddEvent.class);
-                MemIntent.putExtra("Email",TempHolder);
+                Intent MemIntent = new Intent(list_test.this, AddEvent.class);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                MemIntent.putExtras(args);
                 startActivity(MemIntent);
             }
         });
@@ -97,7 +134,9 @@ public class list_test extends Activity {
             @Override
             public void onClick(View v) {
                 Intent MemIntent = new Intent(list_test.this, Events.class);
-                MemIntent.putExtra("Email",TempHolder);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                MemIntent.putExtras(args);
                 startActivity(MemIntent);
             }
         });
@@ -105,7 +144,9 @@ public class list_test extends Activity {
             @Override
             public void onClick(View v) {
                 Intent MemIntent = new Intent(list_test.this, Events.class);
-                MemIntent.putExtra("Email",TempHolder);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                MemIntent.putExtras(args);
                 startActivity(MemIntent);
             }
         });
@@ -114,7 +155,9 @@ public class list_test extends Activity {
             @Override
             public void onClick(View v) {
                 Intent MemIntent = new Intent(list_test.this, Transaction.class);
-                MemIntent.putExtra("Email",TempHolder);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                MemIntent.putExtras(args);
                 startActivity(MemIntent);
             }
         });
@@ -122,7 +165,9 @@ public class list_test extends Activity {
             @Override
             public void onClick(View v) {
                 Intent MemIntent = new Intent(list_test.this, Transaction.class);
-                MemIntent.putExtra("Email",TempHolder);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                MemIntent.putExtras(args);
                 startActivity(MemIntent);
             }
         });
@@ -131,14 +176,20 @@ public class list_test extends Activity {
         birthdayTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bdcalender = new Intent(list_test.this,BirthdayCalender.class);
+                Intent bdcalender = new Intent(list_test.this, BirthdayCalender.class);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                bdcalender.putExtras(args);
                 startActivity(bdcalender);
             }
         });
         birthdayImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bdcalender = new Intent(list_test.this,BirthdayCalender.class);
+                Intent bdcalender = new Intent(list_test.this, BirthdayCalender.class);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                bdcalender.putExtras(args);
                 startActivity(bdcalender);
             }
         });
@@ -149,30 +200,15 @@ public class list_test extends Activity {
                 updateUserData();
             }
         });
-        Cursor cursor = MainActivity.db.getuserdetails(TempHolder);
 
-        if(cursor.getCount() == 0) {
-            Toast.makeText(list_test.this,"Database Error",Toast.LENGTH_SHORT).show();
-        }
-        else {
-            cursor.moveToFirst();
-            nknm = cursor.getString(cursor.getColumnIndex("nick_name"));
-            tm = cursor.getString(cursor.getColumnIndex("team"));
-            usrImg = cursor.getBlob(cursor.getColumnIndex("image"));
-        }
-        yourName.setText("Welcome "+nknm);
-        teamName.setText(tm);
-        teamName1.setText(tm);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(usrImg, 0, usrImg.length);
-        yourImage.setImageBitmap(bitmap);
-
-
-        TeamMailHolder = new String[]{TempHolder, tm};
+        //TeamMailHolder = new String[]{TempHolder, tm};
         teamName1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent home = new Intent(list_test.this,Home.class);
-                home.putExtra("TEAM_NAME", TeamMailHolder);
+                Intent home = new Intent(list_test.this, Home.class);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                home.putExtras(args);
                 startActivity(home);
             }
         });
@@ -180,37 +216,76 @@ public class list_test extends Activity {
         teamIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent home = new Intent(list_test.this,Home.class);
-                home.putExtra("TEAM_NAME", TeamMailHolder);
+                Intent home = new Intent(list_test.this, Home.class);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                home.putExtras(args);
+                startActivity(home);
+            }
+        });
+
+        addTransacImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent home = new Intent(list_test.this, AddTransaction.class);
+                    Bundle args = new Bundle();
+                    args.putSerializable("USER", profileUser);
+                    home.putExtras(args);
+                    startActivity(home);
+            }
+        });
+
+        addTransacTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent home = new Intent(list_test.this, AddTransaction.class);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                home.putExtras(args);
                 startActivity(home);
             }
         });
     }
 
-    private void updateUserData(){
+    private void updateUserData() {
         // get all data from sqlite
-        Cursor cursor = MainActivity.db.getuserdetails(TempHolder);
+        Cursor Upcursor = MainActivity.db.getdata("SELECT * FROM table_user WHERE email = '" + TempHolder + "'");
+        if (Upcursor.getCount() == 0) {
+            Toast.makeText(list_test.this, "No data with this mail", Toast.LENGTH_LONG).show();
+        } else {
+            Upcursor.moveToFirst();
+            Long id = Upcursor.getLong(0);
+            String uemail = Upcursor.getString(1);
+            String uaadhaar = Upcursor.getString(2);
+            String uname = Upcursor.getString(3);
+            String unick_name = Upcursor.getString(4);
+            String uteam = Upcursor.getString(5);
+            String udob = Upcursor.getString(7);
+            String ufood = Upcursor.getString(8);
+            String umobile = Upcursor.getString(9);
+            String ubgrp = Upcursor.getString(10);
+            String upan = Upcursor.getString(11);
+            String uevents = Upcursor.getString(12);
+            byte[] uimage = Upcursor.getBlob(6);
+            String utrans = Upcursor.getString(13);
+            String uabout = Upcursor.getString(14);
 
-        if(cursor.getCount() == 0) {
-            Toast.makeText(list_test.this,"Database Error",Toast.LENGTH_SHORT).show();
+            profileUser = new User(id, uemail, uaadhaar, uname, unick_name, uteam, udob, ufood, umobile, ubgrp, upan, uevents, uimage, utrans, uabout);
         }
-        else {
-            cursor.moveToFirst();
-            nknm = cursor.getString(cursor.getColumnIndex("nick_name"));
-            tm = cursor.getString(cursor.getColumnIndex("team"));
-            usrImg = cursor.getBlob(cursor.getColumnIndex("image"));
-        }
-        yourName.setText("Welcome "+nknm);
-        teamName.setText(tm);
-        teamName1.setText(tm);
+
+        yourName.setText("Welcome " + profileUser.getUnick_name());
+        teamName.setText(profileUser.getUteam());
+        teamName1.setText(profileUser.getUteam());
+        usrImg = profileUser.getUimage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(usrImg, 0, usrImg.length);
         yourImage.setImageBitmap(bitmap);
 
         swipeRefresh.setRefreshing(false);
     }
 
-    Button logout,profile;
-    private void logoutPopup(Activity popActivity, final String membMail){
+    Button logout, profile;
+
+    private void logoutPopup(Activity popActivity, final String membMail) {
 
         logoutProfile.setContentView(R.layout.header_layout);
 
@@ -221,8 +296,8 @@ public class list_test extends Activity {
         logoutProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         logoutProfile.show();
 
-        logout = (Button)logoutProfile.findViewById(R.id.btnLogout);
-        profile = (Button)logoutProfile.findViewById(R.id.btnProfile);
+        logout = (Button) logoutProfile.findViewById(R.id.btnLogout);
+        profile = (Button) logoutProfile.findViewById(R.id.btnProfile);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,18 +309,18 @@ public class list_test extends Activity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(list_test.this,UserProfile.class);
-                newIntent.putExtra("User_Email",membMail);
+                Intent newIntent = new Intent(list_test.this, UserProfile.class);
+                newIntent.putExtra("User_Email", membMail);
                 startActivity(newIntent);
                 logoutProfile.dismiss();
             }
         });
     }
 
-    private void Logout(){
+    private void Logout() {
         session.setLoggedin(false);
         finish();
-        startActivity(new Intent(list_test.this,MainActivity.class));
+        startActivity(new Intent(list_test.this, MainActivity.class));
     }
 
 }

@@ -29,27 +29,23 @@ public class PreviousEvents extends Fragment {
     ArrayList<Events_Card> prvCardList;
     ListView previouseventlist;
     Event_List_Adapter adapter;
-    String mail, prvTeamName;
+    String prvTeamName;
+    User owner_P;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View previousView = inflater.inflate(R.layout.fragment_previous_events, container, false);
-
-        mail = getArguments().getString("edttext");
         previouseventlist = (ListView) previousView.findViewById(R.id.previousEventCardList);
-
-        Cursor teamCursor = MainActivity.db.getdata("SELECT team FROM table_user WHERE email = '" + mail + "'");
-        prvTeamName = "";
-        if (teamCursor.getCount() == 0) {
-            Toast.makeText(getActivity(), "There are no team for this mail!", Toast.LENGTH_LONG).show();
-        } else {
-            teamCursor.moveToFirst();
-            prvTeamName = teamCursor.getString(teamCursor.getColumnIndex("team"));
-
-        }
         prvCardList = new ArrayList<>();
-        Cursor eventDetails = MainActivity.db.getdata("SELECT * FROM table_event WHERE event_date < date('now') ORDER BY event_date DESC");
+
+        owner_P = (User) getArguments().getSerializable("USER_B");
+        prvTeamName = owner_P.getUteam();
+        String events = owner_P.getUevents();
+        String[] names = events.split(",",0);
+        String sql = "SELECT * FROM table_event WHERE event_date < date('now') AND event_ID IN (" + DatabaseHelper.makePlaceholders(names.length) + ")  ORDER BY event_date DESC";
+
+        Cursor eventDetails = MainActivity.db.getEvents(sql,names);
         prvCardList.clear();
         if (eventDetails.getCount() == 0) {
             adapter = new Event_List_Adapter(getActivity(), R.layout.event_list_template, prvCardList);

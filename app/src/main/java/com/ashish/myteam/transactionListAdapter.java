@@ -69,7 +69,7 @@ public class transactionListAdapter extends BaseAdapter {
             holder.transFor.setText("Paid By");
         }
 
-        holder.transForName.setText(String.valueOf(card.getTransName()));
+        holder.transForName.setText(card.getTransName());
         holder.transAmount.setText(String.valueOf(card.getAmount()));
         holder.transDate.setText(card.getDate());
         //[] foodImage = card.getOwnerImg();

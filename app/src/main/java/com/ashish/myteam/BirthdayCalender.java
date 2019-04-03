@@ -36,12 +36,14 @@ public class BirthdayCalender extends AppCompatActivity {
     ArrayList<BirthdayList> birthdayList,evenCalenderList;
     ArrayList<String> names;
     private String[] dob_arr = {};
+    User calenderOwner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.birthday_calender);
 
+        calenderOwner = (User)getIntent().getSerializableExtra("USER");
 
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         current = (TextView) findViewById(R.id.currentMonthYr);
@@ -51,8 +53,9 @@ public class BirthdayCalender extends AppCompatActivity {
         current.setText(DateFormat.format("MMMM yyyy", cal));
         compactCalendar.setFirstDayOfWeek(Calendar.MONDAY);
 
+        ///////  Getting Birthdays from db  //////////////
         birthdayList = new ArrayList<BirthdayList>();
-        Cursor dob_list = MainActivity.db.getdata("SELECT name,dob FROM table_user");
+        Cursor dob_list = MainActivity.db.getdata("SELECT name,dob FROM table_user WHERE team = '"+calenderOwner.getUteam()+"'");
         birthdayList.clear();
         if (dob_list.getCount() == 0) {
             Toast.makeText(BirthdayCalender.this, "No Data", Toast.LENGTH_SHORT).show();
@@ -60,14 +63,19 @@ public class BirthdayCalender extends AppCompatActivity {
             while (dob_list.moveToNext()) {
                 String name = dob_list.getString(0);
                 String dob = dob_list.getString(1);
-                birthdayList.add(new BirthdayList(name, dob));
+                birthdayList.add(new BirthdayList("Happy Birthday "+name, dob));
             }
         }
+
+        ///////  Getting Events from db  //////////////
         evenCalenderList = new ArrayList<BirthdayList>();
-        Cursor event_list = MainActivity.db.getdata("SELECT event_name,event_date FROM table_event");
+        String eventString = calenderOwner.getUevents();
+        String[] User_events = eventString.split(",",0);
+        String sql = "SELECT event_name,event_date FROM table_event WHERE event_ID IN (" + DatabaseHelper.makePlaceholders(User_events.length) + ")";
+        Cursor event_list = MainActivity.db.getEvents(sql,User_events);
         evenCalenderList.clear();
         if (event_list.getCount() == 0) {
-            Toast.makeText(BirthdayCalender.this, "No Data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(BirthdayCalender.this, "You have no Event.", Toast.LENGTH_SHORT).show();
         } else {
             while (event_list.moveToNext()) {
                 String name = event_list.getString(0);
@@ -79,7 +87,7 @@ public class BirthdayCalender extends AppCompatActivity {
         setEvent(birthdayList);
         setEvent(evenCalenderList);
 
-        //////////////////   Checking for today's Date   //////////////////
+        //////////////////   Checking Events for today's Date   //////////////////
         Date today = Calendar.getInstance().getTime();
         List<Event> events = compactCalendar.getEvents(today);
         names = new ArrayList<String>();
@@ -90,7 +98,7 @@ public class BirthdayCalender extends AppCompatActivity {
             for (int i = 0; i<events.size();i++)
             {
                 Event ash = events.get(i);
-                names.add("Happy Birthday "+ash.getData().toString());
+                names.add(ash.getData().toString());
             }
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
@@ -119,7 +127,7 @@ public class BirthdayCalender extends AppCompatActivity {
                     for (int i = 0; i<events.size();i++)
                     {
                         Event ash = events.get(i);
-                        names.add("Happy Birthday "+ash.getData().toString());
+                        names.add(ash.getData().toString());
                     }
 
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(

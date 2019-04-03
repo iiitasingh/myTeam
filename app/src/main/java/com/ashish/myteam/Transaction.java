@@ -20,41 +20,30 @@ public class Transaction extends AppCompatActivity {
     TabLayout TransTabLayout;
     TabItem debit,credit;
     ViewPager TransViewPager;
-    ImageView addTrans;
     TransactionPageTabAdapter transactionPageAdapter;
     String profileOwner;
-    ArrayList<String> authorized;
+    Bundle bundleTrans;
+    User userTrans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction);
 
-        profileOwner = getIntent().getStringExtra("Email");
-        authorized = new ArrayList<>();
-        authorized.add("ashish-za.singh@ubs.com");
+        userTrans = (User) getIntent().getSerializableExtra("USER");
+        bundleTrans = new Bundle();
+        bundleTrans.putSerializable("User_Trans",userTrans);
+
+        profileOwner = userTrans.getUemail();
 
         TransTabLayout = findViewById(R.id.TransactionTablayout);
         debit = findViewById(R.id.debits);
         credit = findViewById(R.id.credits);
         TransViewPager = findViewById(R.id.TransactionViewPager);
-        addTrans = (ImageView)findViewById(R.id.addTransac) ;
-        transactionPageAdapter = new TransactionPageTabAdapter(getSupportFragmentManager(),TransTabLayout.getTabCount());
+
+        transactionPageAdapter = new TransactionPageTabAdapter(getSupportFragmentManager(),TransTabLayout.getTabCount(),bundleTrans);
         TransViewPager.setAdapter(transactionPageAdapter);
         TransViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(TransTabLayout));
-
-        addTrans.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(authorized.contains(profileOwner)) {
-                    Intent add = new Intent(Transaction.this, AddTransaction.class);
-                    startActivity(add);
-                }
-                else {
-                    Toast.makeText(Transaction.this,"You are not authorized to add a transaction "+profileOwner,Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         TransTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

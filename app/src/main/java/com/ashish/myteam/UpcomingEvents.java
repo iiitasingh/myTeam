@@ -27,31 +27,23 @@ public class UpcomingEvents extends Fragment {
     ArrayList<Events_Card> cardList;
     ListView eventlist;
     Event_List_Adapter adapter;
-    String mail;
     String teamName;
-
+    User owner_Up;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_upcoming_events, container, false);
         eventlist = (ListView) v.findViewById(R.id.eventCardList);
-
-        mail = getArguments().getString("edttext");
-
-
-        Cursor teamCursor = MainActivity.db.getdata("SELECT team FROM table_user WHERE email = '"+mail+"'");
-        if(teamCursor.getCount() == 0) {
-            Toast.makeText(getActivity(), "There are no team for this mail!",Toast.LENGTH_LONG).show();
-        }
-        else {
-            teamCursor.moveToFirst();
-            teamName = teamCursor.getString(teamCursor.getColumnIndex("team"));
-
-        }
-
         cardList = new ArrayList<>();
-        Cursor eventDetails = MainActivity.db.getdata("SELECT * FROM table_event WHERE event_date >= date('now') ORDER BY event_date");
+
+        owner_Up = (User) getArguments().getSerializable("USER_B");
+        teamName = owner_Up.getUteam();
+
+        String events = owner_Up.getUevents();
+        String[] names = events.split(",",0);
+        String sql = "SELECT * FROM table_event WHERE event_date >= date('now') AND event_ID IN (" + DatabaseHelper.makePlaceholders(names.length) + ")  ORDER BY event_date";
+        Cursor eventDetails = MainActivity.db.getEvents(sql,names);
         cardList.clear();
         if(eventDetails.getCount() == 0) {
             adapter = new Event_List_Adapter(getActivity(), R.layout.event_list_template, cardList);

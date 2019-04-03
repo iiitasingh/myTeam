@@ -3,10 +3,10 @@ package com.ashish.myteam;
 public class transaction_data {
     long amount;
     String date;
-    long transName;
+    String transName;
     String transType;
 
-    public transaction_data(long amount, String date, long transName, String transType) {
+    public transaction_data(long amount, String date, String transName, String transType) {
         this.amount = amount;
         this.date = date;
         this.transName = transName;
@@ -21,7 +21,7 @@ public class transaction_data {
         return date;
     }
 
-    public long getTransName() {
+    public String getTransName() {
         return transName;
     }
 
@@ -37,7 +37,7 @@ public class transaction_data {
         this.date = date;
     }
 
-    public void setTransName(long transName) {
+    public void setTransName(String transName) {
         this.transName = transName;
     }
 

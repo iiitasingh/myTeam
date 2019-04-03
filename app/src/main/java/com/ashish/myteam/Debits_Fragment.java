@@ -27,28 +27,33 @@ public class Debits_Fragment extends Fragment {
     ArrayList<transaction_data> transacList;
     ListView transacListView;
     transactionListAdapter transacAdapter;
+    User debitTrans;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View transView = inflater.inflate(R.layout.fragment_debits_, container, false);
         transacListView = (ListView)transView.findViewById(R.id.transDebitList);
-
         transacList = new ArrayList<>();
-        Cursor TransDetails = MainActivity.db.getdata("SELECT * FROM table_transaction WHERE transaction_type = 'debit'");
+
+        debitTrans = (User) getArguments().getSerializable("User_Trans");
+        String trans = debitTrans.getUtransaction();
+        String[] names = trans.split(",",0);
+        String sql = "SELECT * FROM table_transaction WHERE transaction_type = 'debit' AND transaction_id IN (" + DatabaseHelper.makePlaceholders(names.length) + ")  ORDER BY transaction_date";
+        Cursor TransDetails = MainActivity.db.getEvents(sql,names);
+        //Cursor TransDetails = MainActivity.db.getdata("SELECT * FROM table_transaction WHERE transaction_type = 'debit'");
         transacList.clear();
-        long userid=0 ,amount =0;
+        long amount =0;
         if(TransDetails.getCount() == 0) {
             transacAdapter = new transactionListAdapter(getActivity(), R.layout.transaction_list_template, transacList);
             Toast.makeText(getActivity(), "There are no contents in this list!",Toast.LENGTH_LONG).show();
         }
         else {
             while(TransDetails.moveToNext()){
-                userid = TransDetails.getLong(1);
+                String userid = TransDetails.getString(1);
                 amount = TransDetails.getLong(2);
                 String date = TransDetails.getString(3);
                 String type = TransDetails.getString(4);
-                //byte[] img = eventDetails.getBlob(1);
                 transacList.add(new transaction_data(amount,date,userid,type));
             }
             transacAdapter = new transactionListAdapter(getActivity(), R.layout.transaction_list_template, transacList);

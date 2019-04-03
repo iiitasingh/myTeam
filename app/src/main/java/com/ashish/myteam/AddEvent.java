@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AddEvent extends AppCompatActivity {
 
@@ -30,11 +31,17 @@ public class AddEvent extends AppCompatActivity {
     CheckBox selectallFrnd;
     ListView eventMembers;
     ImageButton eventAddImgBtn;
-    ArrayList<String> team, eventMemb;
+    ArrayList<String> eventMemb;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     ArrayList<Integer> mUserItems;
-    String eventMembersString = "";
+    ArrayList<teamMemberObject> team;
+    String eventMembersString;
     String eventOwner;
+    User owner;
+    ArrayList<String> userIds;
+    String[] UserIdsStrArr;
+    int ownerPosition = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,18 +56,24 @@ public class AddEvent extends AppCompatActivity {
         eventAddImgBtn = (ImageButton) findViewById(R.id.eventAddImgBtn);
         eventMemb = new ArrayList<String>();
         mUserItems = new ArrayList<>();
+        userIds = new ArrayList<>();
 
         eventMembers.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        eventOwner = getIntent().getStringExtra("Email");
 
-        team = new ArrayList<String>();
-        Cursor frnds_list = MainActivity.db.getdata("SELECT name FROM table_user");
+        owner = (User) getIntent().getSerializableExtra("USER");
+        eventOwner = owner.getUemail();
+
+
+        team = new ArrayList<>();
+        Cursor frnds_list = MainActivity.db.getdata("SELECT ID,name FROM table_user WHERE team = '"+owner.getUteam()+"'");
         team.clear();
         if (frnds_list.getCount() == 0) {
             Toast.makeText(AddEvent.this, "No Data", Toast.LENGTH_SHORT).show();
         } else {
             while (frnds_list.moveToNext()) {
-                team.add(frnds_list.getString(0));
+                Long id = frnds_list.getLong(0);
+                String name = frnds_list.getString(1);
+                team.add(new teamMemberObject(id,name));
             }
         }
         eventMembers.setAdapter(new choose_member_adapter(AddEvent.this,team));
@@ -88,12 +101,18 @@ public class AddEvent extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 String date;
-                if(month <10) {
-                    date = year + "-0" + month + "-" + day;
+                String dayS = String.valueOf(day);
+                String monthS = String.valueOf(month);
+                if(month < 10 )
+                {
+                    monthS = "0" + monthS;
                 }
-                else {
-                    date = year + "-" + month + "-" + day;
+                if(day < 10 )
+                {
+                    dayS = "0" + dayS;
                 }
+
+                date = year + "-" + monthS + "-" + dayS;
                 eventDate.setText(date);
             }
         };
@@ -113,31 +132,54 @@ public class AddEvent extends AppCompatActivity {
             }
         });
 
+        ownerPosition = getOwnerPosition(team);
         eventAddImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 eventMembersString ="";
+                if(!mUserItems.contains(ownerPosition))
+                {
+                    mUserItems.add(ownerPosition);
+                }
+
                 for (int i = 0; i < mUserItems.size(); i++) {
-                    eventMembersString = eventMembersString + team.get(mUserItems.get(i));
+                    eventMembersString = eventMembersString + String.valueOf(team.get(mUserItems.get(i)).getId());
+                    userIds.add(String.valueOf(team.get(mUserItems.get(i)).getId()));
                     if (i != mUserItems.size() - 1) {
                         eventMembersString = eventMembersString + ",";
                     }
                 }
 
+                UserIdsStrArr = new String[userIds.size()];
+                Object[] objArr = userIds.toArray();
+                int j = 0;
+                for (Object obj : objArr) {
+                    UserIdsStrArr[j++] = (String)obj;
+                }
+
                 String name = eventName.getText().toString().trim();
                 String desc = eventDesc.getText().toString().trim();
                 String date = eventDate.getText().toString().trim();
+                Long eventID;
 
                 if(name.length() >= 3 && desc.length() >=5 && date.length() >4)
                 {
-                    long val = MainActivity.db.addEvent(name,eventOwner,desc,date,eventMembersString);
-                    if(val >0)
+                    eventID = MainActivity.db.newEvent(name,eventOwner,desc,date,eventMembersString);
+                    if(eventID >0)
                     {
-                        Toast.makeText(AddEvent.this, "Event Created", Toast.LENGTH_LONG).show();
-                        Intent events = new Intent(AddEvent.this,list_test.class);
-                        events.putExtra("UserEmail",eventOwner);
-                        startActivity(events);
-                        finish();
+                        Long Val = MainActivity.db.addEvent(UserIdsStrArr, String.valueOf(eventID));
+                        //Toast.makeText(AddEvent.this, "Event Created"+ Arrays.toString(UserIdsStrArr) , Toast.LENGTH_LONG).show();
+                        if(Val > 0) {
+                            Toast.makeText(AddEvent.this, "Event Created" + Val, Toast.LENGTH_LONG).show();
+                            Intent events = new Intent(AddEvent.this, list_test.class);
+                            events.putExtra("UserEmail", eventOwner);
+                            startActivity(events);
+                            finish();
+                        }
+                        else {
+                            Toast.makeText(AddEvent.this, "Event Creation failed" + String.valueOf(Val), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
                 else if (name.length() < 3)
@@ -151,6 +193,9 @@ public class AddEvent extends AppCompatActivity {
                 else {
                     Toast.makeText(AddEvent.this, "Date should not be null", Toast.LENGTH_LONG).show();
                 }
+
+
+
             }
         });
 
@@ -178,5 +223,16 @@ public class AddEvent extends AppCompatActivity {
             }
         });
 
+    }
+
+    public int getOwnerPosition(ArrayList<teamMemberObject> teamlist){
+        for (int i = 0; i < teamlist.size();i++)
+        {
+            if(teamlist != null && teamlist.get(i).getId().equals(owner.getId()))
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 }

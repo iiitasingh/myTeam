@@ -42,8 +42,8 @@ public class Home extends AppCompatActivity {
     ArrayList<teams> TeamList;
     ListView your_teams;
     String[] intentHolder;
-    ArrayList<String> arrMails;
     Dialog popupDial,popupDial1;
+    User homeUser;
     //Popup Attributes
 
     @Override
@@ -58,7 +58,8 @@ public class Home extends AppCompatActivity {
         your_teams = (ListView)findViewById(R.id.yourteamlist);
         usericon = (FloatingActionButton)findViewById(R.id.homefab);
 
-        intentHolder = getIntent().getStringArrayExtra("TEAM_NAME");
+        //intentHolder = getIntent().getStringArrayExtra("TEAM_NAME");
+        homeUser = (User) getIntent().getSerializableExtra("USER");
 
         usericon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,14 +68,14 @@ public class Home extends AppCompatActivity {
 //                profile.putExtra("User_Email",intentHolder[0]);
 //                startActivity(profile);
                 //popUp.setAlpha(0.5F);
-                showPopup1(Home.this,intentHolder[0]);
+                showPopup1(Home.this,homeUser.getUemail());
             }
         });
 
 
-        tmname.setText("Team "+intentHolder[1]);
+        tmname.setText("Team "+homeUser.getUteam());
 
-        Cursor cursor = MainActivity.db.getteamMembers(intentHolder[1]);
+        Cursor cursor = MainActivity.db.getteamMembers(homeUser.getUteam());
         TeamList.clear();
         if(cursor.getCount() == 0) {
             your_teams.setAdapter(new your_team_list_adapter(this, R.layout.your_team_list_view, TeamList));
@@ -82,9 +83,10 @@ public class Home extends AppCompatActivity {
         }
         else {
             while(cursor.moveToNext()){
-                String name = cursor.getString(0);
-                byte[] img = cursor.getBlob(1);
-                TeamList.add(new teams(img,name));
+                String mail = cursor.getString(0);
+                String name = cursor.getString(1);
+                byte[] img = cursor.getBlob(2);
+                TeamList.add(new teams(img,name,mail));
             }
             your_teams.setAdapter(new your_team_list_adapter(this, R.layout.your_team_list_view, TeamList));
         }
@@ -93,12 +95,8 @@ public class Home extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                arrMails = new ArrayList<String>();
-                Cursor c = MainActivity.db.getMailsOfTeam(intentHolder[1]);
-                while (c.moveToNext()){
-                    arrMails.add(c.getString(0));
-                }
-                String Membmail = arrMails.get(position).toString();
+
+                String Membmail = TeamList.get(position).getEmail();
                 showPopup2(Home.this,Membmail);
 
             }
