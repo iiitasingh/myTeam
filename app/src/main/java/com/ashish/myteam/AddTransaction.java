@@ -182,9 +182,11 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
                                 Long Val = MainActivity.db.addTransaction(payeeArray, String.valueOf(transID));
                                 if (Val > 0) {
                                     Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_LONG).show();
+                                    //addUserTrans = resume_Page.updateUserData(AddTransaction.this,addUserTrans.getUemail());
+                                    list_test.profileUser = resume_Page.updateUserData(AddTransaction.this,addUserTrans.getUemail());
                                     Intent events = new Intent(AddTransaction.this, Transaction.class);
                                     Bundle args = new Bundle();
-                                    args.putSerializable("USER", addUserTrans);
+                                    args.putSerializable("USER", list_test.profileUser);
                                     events.putExtras(args);
                                     startActivity(events);
                                     finish();
@@ -216,9 +218,11 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
                                 Long Val = MainActivity.db.addTransaction(payeeStringArray, String.valueOf(transID));
                                 if (Val > 0) {
                                     Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_LONG).show();
+                                    //addUserTrans = resume_Page.updateUserData(AddTransaction.this,addUserTrans.getUemail());
+                                    list_test.profileUser = resume_Page.updateUserData(AddTransaction.this,addUserTrans.getUemail());
                                     Intent events = new Intent(AddTransaction.this, Transaction.class);
                                     Bundle args = new Bundle();
-                                    args.putSerializable("USER", addUserTrans);
+                                    args.putSerializable("USER", list_test.profileUser);
                                     events.putExtras(args);
                                     startActivity(events);
                                     finish();
@@ -244,6 +248,7 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
         });
 
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

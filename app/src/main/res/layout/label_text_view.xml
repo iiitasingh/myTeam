@@ -17,7 +17,7 @@
         app:shape_bubble_arrowHeight="30dp"
         app:shape_bubble_arrowPosition="bottom"
         app:shape_bubble_arrowWidth="20dp"
-        app:shape_bubble_borderRadius="40dp">
+        app:shape_bubble_borderRadius="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                         android:gravity="center"
                         android:text="Edit Details"
                         android:textColor="@color/white"
-                        android:textSize="24sp" />
+                        android:textSize="20sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/name_text_input1"
@@ -57,9 +57,30 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/name_edit_text1"
                             android:layout_width="match_parent"
+                            android:textSize="14sp"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:maxLength="12"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/name_text_input8"
+                        style="@style/EditProfileInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/transparent"
+                        android:hint="Designation"
+                        android:textColorHint="@color/white"
+                        android:theme="@style/EditProfileInputLayoutStyle">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/name_edit_text8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:maxLength="35"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -67,7 +88,7 @@
                         style="@style/EditProfileInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@color/transparent"
                         android:hint="DOB"
                         android:textColorHint="@color/white"
@@ -78,6 +99,7 @@
                             android:id="@+id/name_edit_text2"
                             android:focusable="false"
                             android:cursorVisible="false"
+                            android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black" />
@@ -88,7 +110,7 @@
                         style="@style/EditProfileInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@color/transparent"
                         android:hint="Mobile"
                         android:textColorHint="@color/white"
@@ -99,7 +121,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
-                            android:maxLength="10"/>
+                            android:textSize="14sp"
+                            android:maxLength="10"
+                            android:inputType="number"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -107,7 +131,7 @@
                         style="@style/EditProfileInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@color/transparent"
                         android:hint="B-Grp"
                         android:textColorHint="@color/white"
@@ -118,6 +142,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
+                            android:textSize="14sp"
                             android:maxLength="5"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,7 +151,7 @@
                         style="@style/EditProfileInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@color/transparent"
                         android:hint="Food"
                         android:textColorHint="@color/white"
@@ -137,6 +162,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
+                            android:textSize="14sp"
                             android:maxLength="12"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,7 +171,7 @@
                         style="@style/EditProfileInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@color/transparent"
                         android:hint="Pan No"
                         android:textColorHint="@color/white"
@@ -156,6 +182,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
+                            android:textSize="14sp"
                             android:maxLength="10"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -164,7 +191,7 @@
                         style="@style/EditProfileInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@color/transparent"
                         android:hint="Aadhaar"
                         android:textColorHint="@color/white"
@@ -175,6 +202,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:inputType="number"
                             android:maxLength="12"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -182,12 +211,12 @@
                         android:id="@+id/ProfileUpdatebtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:background="@drawable/upload_btn"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bgbtnguide_1"
                         android:fontFamily="@font/mr"
                         android:text="Update"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:textAllCaps="false"/>
                 </LinearLayout>
             </ScrollView>

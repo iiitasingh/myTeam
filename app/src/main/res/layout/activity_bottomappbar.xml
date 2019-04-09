@@ -13,10 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom|center"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="64dp"
         app:arrow_posititon_percent="0.5"
         app:shape_bubble_arrowHeight="30dp"
         app:shape_bubble_arrowPosition="bottom"
@@ -48,15 +45,25 @@
                 android:gravity="center"
                 android:text="Nick Name"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/MemDesig1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ml"
+                android:gravity="center"
+                android:text="MemDesig"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
             <LinearLayout
-                android:layout_weight="0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_weight="0"
                 android:orientation="horizontal">
 
 
@@ -73,7 +80,7 @@
                         android:gravity="start"
                         android:text="Mail"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/MemTeam1"
@@ -83,7 +90,7 @@
                         android:gravity="start"
                         android:text="Team"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/MemDob1"
@@ -93,7 +100,7 @@
                         android:gravity="start"
                         android:text="DOB"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/MemFood1"
@@ -103,7 +110,7 @@
                         android:gravity="start"
                         android:text="Food"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/MemMob1"
@@ -113,7 +120,7 @@
                         android:gravity="start"
                         android:text="Mobile No"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/MemBgp1"
@@ -123,7 +130,7 @@
                         android:gravity="start"
                         android:text="B-Grp"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -135,18 +142,18 @@
                 android:layout_weight="1"
                 android:gravity="center|bottom">
 
-            <Button
-                android:id="@+id/Edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/upload_btn"
-                android:fontFamily="@font/mr"
-                android:text="Edit Profile"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
+                <Button
+                    android:id="@+id/Edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/bgbtnguide_1"
+                    android:fontFamily="@font/mr"
+                    android:text="Edit Profile"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -160,9 +167,6 @@
         android:id="@+id/PopUpUserImg"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:src="@drawable/user_1"
         app:civ_border_color="@color/light_blue_primary_dark"
         app:civ_border_width="3dp"

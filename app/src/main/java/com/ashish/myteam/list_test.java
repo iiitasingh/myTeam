@@ -37,7 +37,7 @@ public class list_test extends Activity {
     byte[] usrImg;
     Dialog logoutProfile;
     Animation atg;
-    User profileUser;
+    public static User profileUser;
     private Session session;
 
     @Override
@@ -93,8 +93,10 @@ public class list_test extends Activity {
             byte[] uimage = Ucursor.getBlob(6);
             String utrans = Ucursor.getString(13);
             String uabout = Ucursor.getString(14);
+            String udesig = Ucursor.getString(15);
+            String uhobby = Ucursor.getString(16);
 
-            profileUser = new User(id, uemail, uaadhaar, uname, unick_name, uteam, udob, ufood, umobile, ubgrp, upan, uevents, uimage, utrans, uabout);
+            profileUser = new User(id, uemail, uaadhaar, uname, unick_name, uteam, udob, ufood, umobile, ubgrp, upan, uevents, uimage, utrans, uabout,udesig,uhobby);
         }
 
         yourName.setText("Welcome " + profileUser.getUnick_name());
@@ -107,7 +109,7 @@ public class list_test extends Activity {
         yourImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logoutPopup(list_test.this, TempHolder);
+                logoutPopup(list_test.this, profileUser);
             }
         });
         addEvent.setOnClickListener(new View.OnClickListener() {
@@ -269,8 +271,10 @@ public class list_test extends Activity {
             byte[] uimage = Upcursor.getBlob(6);
             String utrans = Upcursor.getString(13);
             String uabout = Upcursor.getString(14);
+            String udesig = Upcursor.getString(15);
+            String uhobby = Upcursor.getString(16);
 
-            profileUser = new User(id, uemail, uaadhaar, uname, unick_name, uteam, udob, ufood, umobile, ubgrp, upan, uevents, uimage, utrans, uabout);
+            profileUser = new User(id, uemail, uaadhaar, uname, unick_name, uteam, udob, ufood, umobile, ubgrp, upan, uevents, uimage, utrans, uabout,udesig,uhobby);
         }
 
         yourName.setText("Welcome " + profileUser.getUnick_name());
@@ -284,21 +288,26 @@ public class list_test extends Activity {
     }
 
     Button logout, profile;
+    ImageView logoutUserImg;
 
-    private void logoutPopup(Activity popActivity, final String membMail) {
+    private void logoutPopup(Activity popActivity, final User membMail) {
 
-        logoutProfile.setContentView(R.layout.header_layout);
+        logoutProfile.setContentView(R.layout.logout_popup);
 
-        int width1 = (int) (popActivity.getResources().getDisplayMetrics().widthPixels * .98);
-        int height1 = (int) (popActivity.getResources().getDisplayMetrics().heightPixels * 0.10);
+        int width1 = (int) (popActivity.getResources().getDisplayMetrics().widthPixels * .8);
+        int height1 = (int) (popActivity.getResources().getDisplayMetrics().heightPixels * .6);
         logoutProfile.getWindow().setLayout(width1, height1);
-        logoutProfile.getWindow().setGravity(Gravity.BOTTOM);
+        logoutProfile.getWindow().setGravity(Gravity.CENTER);
         logoutProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         logoutProfile.show();
 
         logout = (Button) logoutProfile.findViewById(R.id.btnLogout);
         profile = (Button) logoutProfile.findViewById(R.id.btnProfile);
+        logoutUserImg = (ImageView) logoutProfile.findViewById(R.id.logoutUserImg);
 
+        byte[] usrerImg = membMail.getUimage();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(usrerImg, 0, usrerImg.length);
+        logoutUserImg.setImageBitmap(bitmap);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -309,8 +318,11 @@ public class list_test extends Activity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(list_test.this, UserProfile.class);
-                newIntent.putExtra("User_Email", membMail);
+                Intent newIntent = new Intent(list_test.this, resume_Page.class);
+                //newIntent.putExtra("User_Email", membMail.getUemail());
+                Bundle args = new Bundle();
+                args.putSerializable("USER", membMail);
+                newIntent.putExtras(args);
                 startActivity(newIntent);
                 logoutProfile.dismiss();
             }

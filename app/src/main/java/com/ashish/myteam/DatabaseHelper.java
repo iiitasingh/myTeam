@@ -10,23 +10,25 @@ import android.database.sqlite.SQLiteStatement;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 
-    public static final String DATABASE_NAME = "MyTeam.db";
-    public static final String TABLE_NAME2 = "table_user";
-    public static final String T2COL_1 = "ID";
-    public static final String T2COL_2 = "email";
-    public static final String T2COL_3 = "aadhaar";
-    public static final String T2COL_4 = "name";
-    public static final String T2COL_5 = "nick_name";
-    public static final String T2COL_6 = "team";
-    public static final String T2COL_7 = "image";
-    public static final String T2COL_8 = "dob";
-    public static final String T2COL_9 = "food";
-    public static final String T2COL_10 = "mobile";
-    public static final String T2COL_11 = "bl_grp";
-    public static final String T2COL_12 = "pan_no";
+    private static final String DATABASE_NAME = "MyTeam.db";
+    private static final String TABLE_NAME2 = "table_user";
+    private static final String T2COL_1 = "ID";
+    private static final String T2COL_2 = "email";
+    private static final String T2COL_3 = "aadhaar";
+    private static final String T2COL_4 = "name";
+    private static final String T2COL_5 = "nick_name";
+    private static final String T2COL_6 = "team";
+    private static final String T2COL_7 = "image";
+    private static final String T2COL_8 = "dob";
+    private static final String T2COL_9 = "food";
+    private static final String T2COL_10 = "mobile";
+    private static final String T2COL_11 = "bl_grp";
+    private static final String T2COL_12 = "pan_no";
     public static final String T2COL_13 = "events";
     public static final String T2COL_14 = "user_transaction";
     public static final String T2COL_15 = "user_about";
+    public static final String T2COL_16 = "user_designation";
+    public static final String T2COL_17 = "user_hobbies";
 
 
     public static final String TABLE_NAME0 = "table_login_user";
@@ -64,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE table_user (ID INTEGER PRIMARY  KEY AUTOINCREMENT, email TEXT, aadhaar TEXT, name TEXT, nick_name TEXT, team TEXT,image blob, dob TEXT, food TEXT,mobile INTEGER,bl_grp TEXT,pan_no TEXT,events TEXT,user_transaction TEXT, user_about TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE table_user (ID INTEGER PRIMARY  KEY AUTOINCREMENT, email TEXT, aadhaar TEXT, name TEXT, nick_name TEXT, team TEXT,image blob, dob TEXT, food TEXT,mobile INTEGER,bl_grp TEXT,pan_no TEXT,events TEXT,user_transaction TEXT, user_about TEXT, user_designation TEXT, user_hobbies TEXT)");
         sqLiteDatabase.execSQL("CREATE TABLE table_team (ID INTEGER PRIMARY  KEY AUTOINCREMENT, team_name TEXT, registering_email TEXT,team_pin TEXT)");
         sqLiteDatabase.execSQL("CREATE TABLE table_login_user (ID INTEGER PRIMARY  KEY AUTOINCREMENT, email TEXT, password TEXT)");
         sqLiteDatabase.execSQL("CREATE TABLE table_event (event_ID INTEGER PRIMARY  KEY AUTOINCREMENT, event_name TEXT, event_owner TEXT,event_desc TEXT, event_date TEXT,event_members TEXT)");
@@ -161,7 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public long addUser(String email, String password, String name, String nickname, String team, byte[] image) {
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "INSERT INTO table_user VALUES (NULL, ?, ?, ?, ?, ?, ?, date('now'), ?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO table_user VALUES (NULL, ?, ?, ?, ?, ?, ?, date('now'), ?,?,?,?,?,?,?,?,?)";
         String sql1 = "INSERT INTO table_login_user VALUES (NULL, ?, ?)";
         SQLiteStatement statement1 = db.compileStatement(sql1);
         SQLiteStatement statement = db.compileStatement(sql);
@@ -179,7 +181,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         statement.bindString(10, "10xxxxxxxx");
         statement.bindString(11, "");
         statement.bindString(12, "");
-        statement.bindString(13, "");
+        statement.bindString(13, "Describe Yourself, Your experiance, skills, passion");
+        statement.bindString(14, "");
+        statement.bindString(15, "");
         long res2 = statement.executeInsert();
 
         statement1.clearBindings();
@@ -282,9 +286,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public long updateUserDetails(String email, String niknm, String dob, String mob, String bgrp, String food, String pan, String aadhar) {
+    public long updateUserDetails(String email, String niknm, String dob, String mob, String bgrp, String food, String pan, String aadhar,String desig) {
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "UPDATE table_user SET nick_name = ?, dob = ?, mobile = ?, bl_grp = ?,food = ?, pan_no = ?, aadhaar = ? WHERE email = ?";
+        String sql = "UPDATE table_user SET nick_name = ?, dob = ?, mobile = ?, bl_grp = ?,food = ?, pan_no = ?, aadhaar = ?, user_designation = ? WHERE email = ?";
         SQLiteStatement statement = db.compileStatement(sql);
 
         statement.clearBindings();
@@ -295,7 +299,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         statement.bindString(5, food);
         statement.bindString(6, pan);
         statement.bindString(7, aadhar);
-        statement.bindString(8, email);
+        statement.bindString(8, desig);
+        statement.bindString(9, email);
+        long res2 = statement.executeInsert();
+        return res2;
+    }
+
+    public long updateAboutDetails(String email, String abt, String hobby) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "UPDATE table_user SET user_about = ?, user_hobbies = ? WHERE email = ?";
+        SQLiteStatement statement = db.compileStatement(sql);
+
+        statement.clearBindings();
+        statement.bindString(1, abt);
+        statement.bindString(2, hobby);
+        statement.bindString(3, email);
         long res2 = statement.executeInsert();
         return res2;
     }

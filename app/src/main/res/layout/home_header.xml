@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    app:layout_constraintCircleRadius="30dp">
+    app:layout_constraintCircleRadius="20dp">
 
 
     <com.github.florent37.shapeofview.shapes.BubbleView
@@ -14,10 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom|center"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="64dp"
         app:arrow_posititon_percent="0.5"
         app:shape_bubble_arrowHeight="30dp"
         app:shape_bubble_arrowPosition="bottom"
@@ -50,7 +47,16 @@
                 android:gravity="center"
                 android:text="Nick Name"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/MemDesig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ml"
+                android:gravity="center"
+                android:text="Member Desig"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,7 +80,7 @@
                         android:gravity="start"
                         android:text="Mail"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/MemTeam"
@@ -84,7 +90,7 @@
                         android:gravity="start"
                         android:text="Team"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/MemDob"
@@ -94,7 +100,7 @@
                         android:gravity="start"
                         android:text="DOB"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/MemFood"
@@ -104,7 +110,7 @@
                         android:gravity="start"
                         android:text="Food"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/MemMob"
@@ -114,7 +120,7 @@
                         android:gravity="start"
                         android:text="Mobile No"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                     <TextView
                         android:id="@+id/MemBgp"
                         android:layout_width="match_parent"
@@ -123,7 +129,7 @@
                         android:gravity="start"
                         android:text="B-Grp"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -139,7 +145,6 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/user_1"
