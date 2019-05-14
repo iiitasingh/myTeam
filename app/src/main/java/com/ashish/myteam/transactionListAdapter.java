@@ -72,9 +72,6 @@ public class transactionListAdapter extends BaseAdapter {
         holder.transForName.setText(card.getTransName());
         holder.transAmount.setText(String.valueOf(card.getAmount()));
         holder.transDate.setText(card.getDate());
-        //[] foodImage = card.getOwnerImg();
-        //Bitmap bitmap = BitmapFactory.decodeByteArray(foodImage, 0, foodImage.length);
-        //holder.eventOwnerImg.setImageBitmap(bitmap);
         return view;
     }
 }

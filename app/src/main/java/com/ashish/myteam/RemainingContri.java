@@ -1,53 +1,40 @@
 package com.ashish.myteam;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
+public class RemainingContri extends AppCompatActivity {
 
-public class UpcomingEvents extends Fragment {
-
-
-
-    public UpcomingEvents() {
-        // Required empty public constructor
-    }
-
+    ListView contriEvents;
     ArrayList<Events_Card> cardList;
-    ListView eventlist;
-    Event_List_Adapter adapter;
+    User owner;
     String teamName;
-    User owner_Up;
+    EventListWallet_Adapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_upcoming_events, container, false);
-        eventlist = (ListView) v.findViewById(R.id.eventCardList);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_remaining_contri);
+
+        contriEvents = (ListView)findViewById(R.id.contriEvents);
         cardList = new ArrayList<>();
 
-        owner_Up = (User) getArguments().getSerializable("USER_B");
-        teamName = owner_Up.getUteam();
-
-        String events = owner_Up.getUevents();
+        owner = (User) getIntent().getSerializableExtra("USER");
+        teamName = owner.getUteam();
+        String events = owner.getUevents();
         String[] names = events.split(",",0);
-        String sql = "SELECT * FROM table_event WHERE event_date >= date('now') AND event_ID IN (" + DatabaseHelper.makePlaceholders(names.length) + ")  ORDER BY event_date";
+        String sql = "SELECT * FROM table_event WHERE contribution == 'true' AND event_ID IN (" + DatabaseHelper.makePlaceholders(names.length) + ")  ORDER BY event_date DESC";
         Cursor eventDetails = MainActivity.db.getEvents(sql,names);
         cardList.clear();
         if(eventDetails.getCount() == 0) {
-            adapter = new Event_List_Adapter(getActivity(), R.layout.event_list_template, cardList);
-            Toast.makeText(getActivity(), "There is no upcoming event!",Toast.LENGTH_LONG).show();
+            adapter = new EventListWallet_Adapter(RemainingContri.this, R.layout.event_list_template, cardList);
+            Toast.makeText(RemainingContri.this, "There is no upcoming event!",Toast.LENGTH_LONG).show();
         }
         else {
             while(eventDetails.moveToNext()){
@@ -64,11 +51,9 @@ public class UpcomingEvents extends Fragment {
                 String CrMems = eventDetails.getString(13);
                 cardList.add(new Events_Card(evtname,teamName,evtDesc,evtDate,evtContri,evtId,evtMems,contri,spent,rem,approx,CrMems));
             }
-            adapter = new Event_List_Adapter(getActivity(), R.layout.event_list_template, cardList);
+            adapter = new EventListWallet_Adapter(RemainingContri.this, R.layout.event_list_template, cardList);
         }
-        eventlist.setAdapter(adapter);
+        contriEvents.setAdapter(adapter);
 
-        return v;
     }
-
 }

@@ -17,7 +17,7 @@
         android:background="@drawable/cardbg">
 
         <TextView
-            android:id="@+id/EventtextView6"
+            android:id="@+id/pendEventtextView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -25,11 +25,11 @@
             android:text="Validity:"
             android:textColor="@color/text_Color"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintBottom_toTopOf="@+id/pendtextView4"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/eventTextView7"
+            android:id="@+id/pendEventTextView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -41,7 +41,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/eventCardDesc"
+            android:id="@+id/pendeventCardDesc"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -50,10 +50,10 @@
             android:textColor="@color/text_Color"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eventTextView7" />
+            app:layout_constraintTop_toBottomOf="@+id/pendEventTextView7" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/pendtextView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -62,11 +62,11 @@
             android:text="Venue:"
             android:textColor="@color/text_Color"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/contri"
+            app:layout_constraintBottom_toTopOf="@+id/pendcontri"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/eventMemList"
+            android:id="@+id/pendeventMemList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -83,7 +83,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
-            android:id="@+id/contri"
+            android:id="@+id/pendcontri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -96,17 +96,17 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            android:id="@+id/contriImg"
+            android:id="@+id/pendcontriImg"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="4dp"
             android:layout_marginBottom="8dp"
             android:src="@drawable/tick"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/contri" />
+            app:layout_constraintStart_toEndOf="@+id/pendcontri" />
 
         <TextView
-            android:id="@+id/eventCardTeam"
+            android:id="@+id/pendeventCardTeam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -120,40 +120,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/TotalContri"
+            android:id="@+id/pendContriAmt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:fontFamily="@font/mlight"
-            android:text="Total: 10000"
-            android:textColor="@color/text_Color"
+            android:layout_marginBottom="35dp"
+            android:fontFamily="@font/mr"
+            android:text="Contribution Amt: 100"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/SpentContri"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/SpentContri"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/mlight"
-            android:text="Spent: 5900"
-            android:textColor="@color/text_Color"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/RemainingContri"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/RemainingContri"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="@font/mlight"
-            android:text="Remaining: 4100"
-            android:textColor="@color/text_Color"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/eventMemList"
+            app:layout_constraintBottom_toTopOf="@+id/pendeventMemList"
             app:layout_constraintEnd_toEndOf="parent" />
 
 

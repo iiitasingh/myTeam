@@ -30,8 +30,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class list_test extends Activity {
 
-    ImageView yourImage, teamIcon, addEvent, birthdayImg, EventsImg, transactionImg, addTransacImg;
-    TextView yourName, teamName, teamName1, birthdayTxt, addEventTxt, EventsTxt, transactionTxt, addTransacTxt;
+    ImageView yourImage, teamIcon, addEvent, birthdayImg, EventsImg, transactionImg, addTransacImg, ContriWalletImg;
+    TextView yourName, teamName, teamName1, birthdayTxt, addEventTxt, EventsTxt, transactionTxt, addTransacTxt, ContriWalletTxt;
     SwipeRefreshLayout swipeRefresh;
     String TempHolder;
     byte[] usrImg;
@@ -68,8 +68,8 @@ public class list_test extends Activity {
         transactionTxt = (TextView) findViewById(R.id.transactionTxt);
         addTransacImg = (ImageView) findViewById(R.id.addTransacImg);
         addTransacTxt = (TextView) findViewById(R.id.addTransacTxt);
-
-
+        ContriWalletImg = (ImageView) findViewById(R.id.ContriWalletImg);
+        ContriWalletTxt = (TextView) findViewById(R.id.ContriWalletTxt);
 
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
 
@@ -241,6 +241,28 @@ public class list_test extends Activity {
             @Override
             public void onClick(View v) {
                 Intent home = new Intent(list_test.this, AddTransaction.class);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                home.putExtras(args);
+                startActivity(home);
+            }
+        });
+
+        ContriWalletImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent home = new Intent(list_test.this, wallet.class);
+                Bundle args = new Bundle();
+                args.putSerializable("USER", profileUser);
+                home.putExtras(args);
+                startActivity(home);
+            }
+        });
+
+        ContriWalletTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent home = new Intent(list_test.this, wallet.class);
                 Bundle args = new Bundle();
                 args.putSerializable("USER", profileUser);
                 home.putExtras(args);

@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -27,8 +28,8 @@ import java.util.Arrays;
 
 public class AddEvent extends AppCompatActivity {
 
-    EditText eventName, eventDesc, eventDate;
-    CheckBox selectallFrnd;
+    EditText eventName, eventDesc, eventDate, approxContri;
+    CheckBox selectallFrnd, contriButton;
     ListView eventMembers;
     ImageButton eventAddImgBtn;
     ArrayList<String> eventMemb;
@@ -52,8 +53,10 @@ public class AddEvent extends AppCompatActivity {
         eventDesc = (EditText)findViewById(R.id.eventDesc);
         eventDate = (EditText)findViewById(R.id.eventDate);
         selectallFrnd = (CheckBox) findViewById(R.id.selectFrnd);
+        contriButton = (CheckBox) findViewById(R.id.collection_Box);
         eventMembers = (ListView) findViewById(R.id.eventMembers);
         eventAddImgBtn = (ImageButton) findViewById(R.id.eventAddImgBtn);
+        approxContri = (EditText)findViewById(R.id.approxContri);
         eventMemb = new ArrayList<String>();
         mUserItems = new ArrayList<>();
         userIds = new ArrayList<>();
@@ -93,6 +96,25 @@ public class AddEvent extends AppCompatActivity {
                         year,month,day);
                 dobPicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dobPicker.show();
+            }
+        });
+
+        contriButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(contriButton.isChecked())
+                {
+                    approxContri.setFocusableInTouchMode(true);
+                    approxContri.requestFocus();
+                    approxContri.setFocusable(true);
+                    approxContri.setClickable(true);
+                }else{
+                    approxContri.setFocusableInTouchMode(false);
+                    approxContri.requestFocus();
+                    approxContri.setText("");
+                    approxContri.setFocusable(false);
+                    approxContri.setClickable(false);
+                }
             }
         });
 
@@ -161,24 +183,50 @@ public class AddEvent extends AppCompatActivity {
                 String name = eventName.getText().toString().trim();
                 String desc = eventDesc.getText().toString().trim();
                 String date = eventDate.getText().toString().trim();
+                String contri = Boolean.toString(contriButton.isChecked());
+                String contriAmount = approxContri.getText().toString().trim();
                 Long eventID;
 
                 if(name.length() >= 3 && desc.length() >=5 && date.length() >4)
                 {
-                    eventID = MainActivity.db.newEvent(name,eventOwner,desc,date,eventMembersString);
-                    if(eventID >0)
-                    {
-                        Long Val = MainActivity.db.addEvent(UserIdsStrArr, String.valueOf(eventID));
-                        //Toast.makeText(AddEvent.this, "Event Created"+ Arrays.toString(UserIdsStrArr) , Toast.LENGTH_LONG).show();
-                        if(Val > 0) {
-                            Toast.makeText(AddEvent.this, "Event Created" + Val, Toast.LENGTH_LONG).show();
-                            Intent events = new Intent(AddEvent.this, list_test.class);
-                            events.putExtra("UserEmail", eventOwner);
-                            startActivity(events);
-                            finish();
+                    if(contriButton.isChecked()) {
+                        if(contriAmount.length() > 0) {
+                            Long amount = Long.parseLong(contriAmount);
+                            eventID = MainActivity.db.newEvent(name, eventOwner, desc, date, eventMembersString, contri, amount);
+
+                            if (eventID > 0) {
+                                Long Val = MainActivity.db.addEvent(UserIdsStrArr, String.valueOf(eventID));
+                                if (Val > 0) {
+                                    Toast.makeText(AddEvent.this, "Event Created", Toast.LENGTH_LONG).show();
+                                    Intent events = new Intent(AddEvent.this, list_test.class);
+                                    events.putExtra("UserEmail", eventOwner);
+                                    startActivity(events);
+                                    finish();
+                                } else {
+                                    Toast.makeText(AddEvent.this, "Event Creation failed", Toast.LENGTH_LONG).show();
+                                }
+                            }
                         }
                         else {
-                            Toast.makeText(AddEvent.this, "Event Creation failed" + String.valueOf(Val), Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddEvent.this, "Put Some approximate Contri Amount", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else {
+                        contriAmount = "0";
+                        Long amount = Long.parseLong(contriAmount);
+                        eventID = MainActivity.db.newEvent(name, eventOwner, desc, date, eventMembersString, contri,amount);
+                        if (eventID > 0) {
+                            Long Val = MainActivity.db.addEvent(UserIdsStrArr, String.valueOf(eventID));
+                            //Toast.makeText(AddEvent.this, "Event Created"+ Arrays.toString(UserIdsStrArr) , Toast.LENGTH_LONG).show();
+                            if (Val > 0) {
+                                Toast.makeText(AddEvent.this, "Event Created", Toast.LENGTH_LONG).show();
+                                Intent events = new Intent(AddEvent.this, list_test.class);
+                                events.putExtra("UserEmail", eventOwner);
+                                startActivity(events);
+                                finish();
+                            } else {
+                                Toast.makeText(AddEvent.this, "Event Creation failed", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 }

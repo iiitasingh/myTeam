@@ -50,6 +50,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String T3COL_4 = "event_desc";
     public static final String T3COL_5 = "event_date";
     public static final String T3COL_6 = "event_members";
+    public static final String T3COL_7 = "contribution";
+    public static final String T3COL_8 = "contri_amount";
+    public static final String T3COL_9 = "event_contri";
+    public static final String T3COL_10 = "spent_amount";
+    public static final String T3COL_11 = "remaining_contri";
+    public static final String T3COL_12 = "credit_transactions";
+    public static final String T3COL_13 = "debit_transactions";
+    public static final String T3COL_14 = "credit_members";
+
 
     public static final String TABLE_NAME4 = "table_transaction";
     public static final String T4COL_1 = "transaction_id";
@@ -69,7 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE table_user (ID INTEGER PRIMARY  KEY AUTOINCREMENT, email TEXT, aadhaar TEXT, name TEXT, nick_name TEXT, team TEXT,image blob, dob TEXT, food TEXT,mobile INTEGER,bl_grp TEXT,pan_no TEXT,events TEXT,user_transaction TEXT, user_about TEXT, user_designation TEXT, user_hobbies TEXT)");
         sqLiteDatabase.execSQL("CREATE TABLE table_team (ID INTEGER PRIMARY  KEY AUTOINCREMENT, team_name TEXT, registering_email TEXT,team_pin TEXT)");
         sqLiteDatabase.execSQL("CREATE TABLE table_login_user (ID INTEGER PRIMARY  KEY AUTOINCREMENT, email TEXT, password TEXT)");
-        sqLiteDatabase.execSQL("CREATE TABLE table_event (event_ID INTEGER PRIMARY  KEY AUTOINCREMENT, event_name TEXT, event_owner TEXT,event_desc TEXT, event_date TEXT,event_members TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE table_event (event_ID INTEGER PRIMARY  KEY AUTOINCREMENT, event_name TEXT, event_owner TEXT,event_desc TEXT, event_date TEXT,event_members TEXT, contribution TEXT, contri_amount INTEGER, event_contri INTEGER, spent_amount INTEGER, remaining_contri INTEGER, credit_transactions TEXT, debit_transactions TEXT, credit_members TEXT)");
         sqLiteDatabase.execSQL("CREATE TABLE table_transaction (transaction_id INTEGER PRIMARY  KEY AUTOINCREMENT, user_id TEXT, amount INTEGER, transaction_date TEXT, transaction_type TEXT, transaction_desc TEXT)");
     }
 
@@ -318,9 +327,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res2;
     }
 
-    public long newEvent(String name, String mail, String desc, String date, String members) {
+    public long newEvent(String name, String mail, String desc, String date, String members, String contri, Long amount) {
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "INSERT INTO table_event VALUES (NULL, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO table_event VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         SQLiteStatement statement = db.compileStatement(sql);
 
         statement.clearBindings();
@@ -329,6 +338,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         statement.bindString(3, desc);
         statement.bindString(4, date);
         statement.bindString(5, members);
+        statement.bindString(6, contri);
+        statement.bindLong(7, amount);
+        statement.bindLong(8, 0);
+        statement.bindLong(9, 0);
+        statement.bindLong(10, 0);
+        statement.bindString(11, "");
+        statement.bindString(12, "");
+        statement.bindString(13, "");
         long res3 = statement.executeInsert();
         return res3;
     }
@@ -354,6 +371,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res3;
 
     }
+
+    public long addCreditTransaction(Long eventId, String transId) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "UPDATE table_event SET credit_transactions = credit_transactions + ? +',' WHERE event_ID = ?";
+        SQLiteStatement statement = db.compileStatement(sql);
+
+        statement.clearBindings();
+        statement.bindString(1, transId);
+        statement.bindLong(2, eventId);
+        long res2 = statement.executeInsert();
+        return res2;
+    }
+
+    public long addCreditMember(Long eventId, String memId) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "UPDATE table_event SET credit_members = credit_members + ? + ',' WHERE event_ID = ?";
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(1, memId);
+        statement.bindLong(2, eventId);
+        long res2 = statement.executeInsert();
+        return res2;
+    }
+
+    public long addDebitTransaction(Long eventId, String trasId) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "UPDATE table_event SET debit_transactions = debit_transactions + ? + ',' WHERE event_ID = ?";
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(1, trasId);
+        statement.bindLong(2, eventId);
+        long res2 = statement.executeInsert();
+        return res2;
+    }
+
+    public long updateContriAmounts(long evtContri, long spent, long remain, long id) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "UPDATE table_event SET event_contri = ?, spent_amount = ?, remaining_contri = ? WHERE event_ID = ?";
+        SQLiteStatement statement = db.compileStatement(sql);
+
+        statement.clearBindings();
+        statement.bindLong(1, evtContri);
+        statement.bindLong(2, spent);
+        statement.bindLong(3, remain);
+        statement.bindLong(4, id);
+        long res2 = statement.executeInsert();
+        return res2;
+    }
+
 
     public Cursor getEvents(String query, String[] names) {
         SQLiteDatabase db = getWritableDatabase();

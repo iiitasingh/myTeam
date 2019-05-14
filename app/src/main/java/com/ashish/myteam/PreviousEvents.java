@@ -49,14 +49,21 @@ public class PreviousEvents extends Fragment {
         prvCardList.clear();
         if (eventDetails.getCount() == 0) {
             adapter = new Event_List_Adapter(getActivity(), R.layout.event_list_template, prvCardList);
-            Toast.makeText(getActivity(), "There are no contents in this list!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "There is no previous event!", Toast.LENGTH_LONG).show();
         } else {
             while (eventDetails.moveToNext()) {
                 String evtname = eventDetails.getString(1);
                 String evtDesc = eventDetails.getString(3);
                 String evtDate = eventDetails.getString(4);
-                //byte[] img = eventDetails.getBlob(1);
-                prvCardList.add(new Events_Card(evtname, prvTeamName, evtDesc, evtDate));
+                String evtContri = eventDetails.getString(6);
+                Long evtId = eventDetails.getLong(0);
+                String evtMems = eventDetails.getString(5);
+                Long contri = eventDetails.getLong(8);
+                Long spent = eventDetails.getLong(9);
+                Long rem = eventDetails.getLong(10);
+                Long approx = eventDetails.getLong(7);
+                String CrMems = eventDetails.getString(13);
+                prvCardList.add(new Events_Card(evtname, prvTeamName, evtDesc, evtDate, evtContri,evtId,evtMems,contri,spent,rem,approx,CrMems));
             }
             adapter = new Event_List_Adapter(getActivity(), R.layout.event_list_template, prvCardList);
             previouseventlist.setAdapter(adapter);

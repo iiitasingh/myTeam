@@ -86,6 +86,8 @@
                     android:textColorHint="@color/text_Color"
                     android:textSize="14sp"
                     android:maxLength="30"
+                    android:focusable="false"
+                    android:clickable="false"
                     android:textCursorDrawable="@drawable/color_cursor"/>
 
                 <EditText
@@ -105,15 +107,27 @@
                     android:textSize="14sp" />
 
                 <Spinner
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/payeeEvents"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="10dp"
+                    android:textAlignment="viewStart"/>
+
+                <Spinner
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:id="@+id/payeeMember"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="3dp"
                     android:layout_marginBottom="10dp"
-                    android:textAlignment="viewStart">
+                    android:textAlignment="viewStart"
+                    android:clickable="false"
+                    android:focusable="false"/>
 
-                </Spinner>
 
             </LinearLayout>
 

@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/teamwork_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".teammate_resume"></activity>
+        <activity android:name=".RemainingContri"></activity>
+        <activity android:name=".wallet" />
+        <activity android:name=".teammate_resume" />
         <activity android:name=".resume_Page" />
         <activity android:name=".AddTransaction" />
         <activity android:name=".Transaction" />
