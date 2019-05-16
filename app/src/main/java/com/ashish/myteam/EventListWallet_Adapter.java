@@ -1,6 +1,7 @@
 package com.ashish.myteam;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class EventListWallet_Adapter extends BaseAdapter {
 
     private class ViewHolder{
         ImageView contriImg;
-        TextView eventName,teamName,eventDesc,eventDate,TotalContri, SpentContri, RemainingContri;
+        TextView eventName,teamName,eventDesc,eventDate,TotalContri, SpentContri, RemainingContri,eventMemList;
     }
 
     @Override
@@ -57,7 +58,8 @@ public class EventListWallet_Adapter extends BaseAdapter {
         holder.TotalContri = view.findViewById(R.id.TotalContri);
         holder.SpentContri = view.findViewById(R.id.SpentContri);
         holder.RemainingContri = view.findViewById(R.id.RemainingContri);
-        Events_Card card = eventCard.get(position);
+        holder.eventMemList = view.findViewById(R.id.eventMemList);
+        final Events_Card card = eventCard.get(position);
 
         holder.eventName.setText(card.getEventName());
         holder.teamName.setText(card.getTeamName());
@@ -74,6 +76,15 @@ public class EventListWallet_Adapter extends BaseAdapter {
         else {
             holder.contriImg.setImageResource(R.drawable.cancel);
         }
+
+        holder.eventMemList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent memList = new Intent(context,EventMemberList.class);
+                memList.putExtra("members",card.getEventMembers());
+                context.startActivity(memList);
+            }
+        });
         return view;
     }
 }

@@ -1,6 +1,7 @@
 package com.ashish.myteam;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -42,7 +43,7 @@ public class Event_List_Adapter extends BaseAdapter {
 
     private class ViewHolder{
         ImageView contriImg;
-        TextView eventName,teamName,eventDesc,eventDate, TotalContri, SpentContri, RemainingContri;
+        TextView eventName,teamName,eventDesc,eventDate, TotalContri, SpentContri, RemainingContri, eventMemList;
     }
 
     @Override
@@ -59,6 +60,7 @@ public class Event_List_Adapter extends BaseAdapter {
         holder.TotalContri = view.findViewById(R.id.TotalContri);
         holder.SpentContri = view.findViewById(R.id.SpentContri);
         holder.RemainingContri = view.findViewById(R.id.RemainingContri);
+        holder.eventMemList = view.findViewById(R.id.eventMemList);
 
         Events_Card card = eventCard.get(position);
 
@@ -77,6 +79,15 @@ public class Event_List_Adapter extends BaseAdapter {
         else {
             holder.contriImg.setImageResource(R.drawable.cancel);
         }
+
+//        holder.eventMemList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent memList = new Intent(context,Main2Activity.class);
+//                context.startActivity(memList);
+//            }
+//        });
+
         return view;
     }
 }

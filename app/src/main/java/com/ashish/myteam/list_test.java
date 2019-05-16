@@ -30,7 +30,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class list_test extends Activity {
 
-    ImageView yourImage, teamIcon, addEvent, birthdayImg, EventsImg, transactionImg, addTransacImg, ContriWalletImg;
+    ImageView yourImage, teamIcon, addEvent, birthdayImg, EventsImg, transactionImg, addTransacImg, ContriWalletImg,addEventImg2;
     TextView yourName, teamName, teamName1, birthdayTxt, addEventTxt, EventsTxt, transactionTxt, addTransacTxt, ContriWalletTxt;
     SwipeRefreshLayout swipeRefresh;
     String TempHolder;
@@ -70,6 +70,7 @@ public class list_test extends Activity {
         addTransacTxt = (TextView) findViewById(R.id.addTransacTxt);
         ContriWalletImg = (ImageView) findViewById(R.id.ContriWalletImg);
         ContriWalletTxt = (TextView) findViewById(R.id.ContriWalletTxt);
+        addEventImg2 = (ImageView) findViewById(R.id.addEventImg2);
 
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
 
@@ -266,6 +267,17 @@ public class list_test extends Activity {
                 Bundle args = new Bundle();
                 args.putSerializable("USER", profileUser);
                 home.putExtras(args);
+                startActivity(home);
+            }
+        });
+
+        addEventImg2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent home = new Intent(list_test.this, Main2Activity.class);
+//                Bundle args = new Bundle();
+//                args.putSerializable("USER", profileUser);
+//                home.putExtras(args);
                 startActivity(home);
             }
         });

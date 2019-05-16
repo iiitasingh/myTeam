@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
@@ -31,7 +32,7 @@ public class AddEvent extends AppCompatActivity {
     EditText eventName, eventDesc, eventDate, approxContri;
     CheckBox selectallFrnd, contriButton;
     ListView eventMembers;
-    ImageButton eventAddImgBtn;
+    Button eventAddImgBtn;
     ArrayList<String> eventMemb;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     ArrayList<Integer> mUserItems;
@@ -55,7 +56,7 @@ public class AddEvent extends AppCompatActivity {
         selectallFrnd = (CheckBox) findViewById(R.id.selectFrnd);
         contriButton = (CheckBox) findViewById(R.id.collection_Box);
         eventMembers = (ListView) findViewById(R.id.eventMembers);
-        eventAddImgBtn = (ImageButton) findViewById(R.id.eventAddImgBtn);
+        eventAddImgBtn = (Button) findViewById(R.id.eventAddImgBtn);
         approxContri = (EditText)findViewById(R.id.approxContri);
         eventMemb = new ArrayList<String>();
         mUserItems = new ArrayList<>();

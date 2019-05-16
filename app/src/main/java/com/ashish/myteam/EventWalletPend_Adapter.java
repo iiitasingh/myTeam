@@ -1,6 +1,7 @@
 package com.ashish.myteam;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class EventWalletPend_Adapter extends BaseAdapter {
 
     private class ViewHolder{
         ImageView contriImg;
-        TextView eventName,teamName,eventDesc,eventDate, pendContriAmt;
+        TextView eventName,teamName,eventDesc,eventDate, pendContriAmt, pendeventMemList;
     }
 
     @Override
@@ -55,21 +56,31 @@ public class EventWalletPend_Adapter extends BaseAdapter {
         holder.eventDesc = view.findViewById(R.id.pendeventCardDesc);
         holder.eventDate = view.findViewById(R.id.pendEventtextView6);
         holder.pendContriAmt = view.findViewById(R.id.pendContriAmt);
-        Events_Card card = eventCard.get(position);
+        holder.pendeventMemList = view.findViewById(R.id.pendeventMemList);
+        final Events_Card card1 = eventCard.get(position);
 
-        holder.eventName.setText(card.getEventName());
-        holder.teamName.setText(card.getTeamName());
-        holder.eventDesc.setText(card.getEventDesc());
-        holder.eventDate.setText("Date: "+card.getEventDate());
-        holder.pendContriAmt.setText("Contribution Amt: "+card.getApproxContri());
+        holder.eventName.setText(card1.getEventName());
+        holder.teamName.setText(card1.getTeamName());
+        holder.eventDesc.setText(card1.getEventDesc());
+        holder.eventDate.setText("Date: "+card1.getEventDate());
+        holder.pendContriAmt.setText("Contribution Amt: "+card1.getApproxContri());
 
-        if(card.getEventContri().equals("true"))
+        if(card1.getEventContri().equals("true"))
         {
             holder.contriImg.setImageResource(R.drawable.tick);
         }
         else {
             holder.contriImg.setImageResource(R.drawable.cancel);
         }
+
+        holder.pendeventMemList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mempendList = new Intent(context,EventMemberList.class);
+                mempendList.putExtra("members",card1.getEventMembers());
+                context.startActivity(mempendList);
+            }
+        });
         return view;
     }
 }
