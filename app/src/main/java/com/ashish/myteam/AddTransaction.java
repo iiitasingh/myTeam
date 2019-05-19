@@ -213,8 +213,8 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
                                 Long Val = MainActivity.db.addTransaction(payeeArray, String.valueOf(transID));
                                 if (Val > 0 && val1 > 0 && val2 > 0) {
                                     updateCreditAmt(selectedEventId);
-                                    //Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_LONG).show();
-                                    //addUserTrans = resume_Page.updateUserData(AddTransaction.this,addUserTrans.getUemail());
+                                    Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_LONG).show();
+                                    addUserTrans = resume_Page.updateUserData(AddTransaction.this,addUserTrans.getUemail());
                                     list_test.profileUser = resume_Page.updateUserData(AddTransaction.this, addUserTrans.getUemail());
                                     Intent events = new Intent(AddTransaction.this, Transaction.class);
                                     Bundle args = new Bundle();
@@ -250,8 +250,8 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
                                 Long Val = MainActivity.db.addTransaction(payeeStringArray, String.valueOf(transID));
                                 if (Val > 0 && val1 >0) {
                                     updateCreditAmt(selectedEventId);
-                                    //Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_LONG).show();
-                                    //addUserTrans = resume_Page.updateUserData(AddTransaction.this,addUserTrans.getUemail());
+                                    Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_LONG).show();
+                                    addUserTrans = resume_Page.updateUserData(AddTransaction.this,addUserTrans.getUemail());
                                     list_test.profileUser = resume_Page.updateUserData(AddTransaction.this,addUserTrans.getUemail());
                                     Intent events = new Intent(AddTransaction.this, Transaction.class);
                                     Bundle args = new Bundle();
@@ -397,7 +397,7 @@ public class AddTransaction extends AppCompatActivity implements OnItemSelectedL
         Long res = MainActivity.db.updateContriAmounts(event_contri,spent_amount,remaining_contri,eventId);
 
         if(res > 0 ){
-            Toast.makeText(AddTransaction.this, "amounts = "+event_contri+"="+spent_amount+"="+remaining_contri, Toast.LENGTH_LONG).show();
+            //Toast.makeText(AddTransaction.this, "amounts = "+event_contri+"="+spent_amount+"="+remaining_contri, Toast.LENGTH_LONG).show();
         }
     }
 }

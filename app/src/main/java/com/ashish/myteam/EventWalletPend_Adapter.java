@@ -77,7 +77,7 @@ public class EventWalletPend_Adapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent mempendList = new Intent(context,EventMemberList.class);
-                mempendList.putExtra("members",card1.getEventMembers());
+                mempendList.putExtra("members",new String[]{card1.getEventMembers(),card1.getCreditMemb()});
                 context.startActivity(mempendList);
             }
         });

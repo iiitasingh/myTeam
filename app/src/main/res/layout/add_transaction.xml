@@ -155,7 +155,7 @@
             android:elevation="4dp"
             android:fontFamily="@font/mlight"
             android:gravity="center"
-            android:text="Add Event"
+            android:text="Add Transaction"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_anchor="@+id/transLayout1"

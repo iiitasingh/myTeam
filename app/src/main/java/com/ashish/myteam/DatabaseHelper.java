@@ -374,7 +374,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public long addCreditTransaction(Long eventId, String transId) {
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "UPDATE table_event SET credit_transactions = credit_transactions + ? +',' WHERE event_ID = ?";
+        String sql = "UPDATE table_event SET credit_transactions = credit_transactions || ',' || ?  WHERE event_ID = ?";
         SQLiteStatement statement = db.compileStatement(sql);
 
         statement.clearBindings();
@@ -386,7 +386,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public long addCreditMember(Long eventId, String memId) {
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "UPDATE table_event SET credit_members = credit_members + ? + ',' WHERE event_ID = ?";
+        String sql = "UPDATE table_event SET credit_members = credit_members || ',' || ?  WHERE event_ID = ?";
         SQLiteStatement statement = db.compileStatement(sql);
         statement.clearBindings();
         statement.bindString(1, memId);
@@ -397,7 +397,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public long addDebitTransaction(Long eventId, String trasId) {
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "UPDATE table_event SET debit_transactions = debit_transactions + ? + ',' WHERE event_ID = ?";
+        String sql = "UPDATE table_event SET debit_transactions = debit_transactions || ',' || ? WHERE event_ID = ?";
         SQLiteStatement statement = db.compileStatement(sql);
         statement.clearBindings();
         statement.bindString(1, trasId);
