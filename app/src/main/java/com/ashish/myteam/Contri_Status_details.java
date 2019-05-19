@@ -2,11 +2,11 @@ package com.ashish.myteam;
 
 public class Contri_Status_details {
 
-    private Long ID;
+    Long ID;
     String name;
-    private boolean status;
+    boolean status;
 
-    private Contri_Status_details(Long ID, String name, boolean status) {
+    public Contri_Status_details(Long ID, String name, boolean status) {
         this.name = name;
         this.ID = ID;
         this.status = status;
@@ -20,7 +20,7 @@ public class Contri_Status_details {
         this.name = name;
     }
 
-    private long getID() {
+    long getID() {
         return ID;
     }
 
@@ -28,11 +28,11 @@ public class Contri_Status_details {
         this.ID = ID;
     }
 
-    private boolean isStatus() {
+    boolean isStatus() {
         return status;
     }
 
-    private void setStatus(boolean status) {
+    void setStatus(boolean status) {
         this.status = status;
     }
 }
