@@ -72,14 +72,15 @@ public class Home extends AppCompatActivity {
         TeamList.clear();
         if(cursor.getCount() == 0) {
             your_teams.setAdapter(new your_team_list_adapter(this, R.layout.your_team_list_view, TeamList));
-            Toast.makeText(Home.this, "There are no contents in this list!",Toast.LENGTH_LONG).show();
+            Toast.makeText(Home.this, "No Member in this Team!",Toast.LENGTH_LONG).show();
         }
         else {
             while(cursor.moveToNext()){
                 String mail = cursor.getString(0);
                 String name = cursor.getString(1);
                 byte[] img = cursor.getBlob(2);
-                TeamList.add(new teams(img,name,mail));
+                String desig = cursor.getString(3);
+                TeamList.add(new teams(img,name,mail,desig));
             }
             your_teams.setAdapter(new your_team_list_adapter(this, R.layout.your_team_list_view, TeamList));
         }
@@ -130,22 +131,6 @@ public class Home extends AppCompatActivity {
         MemBgp = (TextView) popupDial.findViewById(R.id.MemBgp1);
         MemDesig1 = (TextView) popupDial.findViewById(R.id.MemDesig1);
         edit = (Button) popupDial.findViewById(R.id.Edit);
-
-//        Cursor data1 = MainActivity.db.getuserAlldetails(mail);
-//        if (data1.getCount() == 0) {
-//            Toast.makeText(popActivity, "Database Error", Toast.LENGTH_SHORT).show();
-//        } else {
-//            data1.moveToFirst();
-//            Umail = data1.getString(data1.getColumnIndex("email"));
-//            nam = data1.getString(data1.getColumnIndex("name"));
-//            niknam = data1.getString(data1.getColumnIndex("nick_name"));
-//            tnm = data1.getString(data1.getColumnIndex("team"));
-//            userimg = data1.getBlob(data1.getColumnIndex("image"));
-//            dob = data1.getString(data1.getColumnIndex("dob"));
-//            food = data1.getString(data1.getColumnIndex("food"));
-//            mob = data1.getString(data1.getColumnIndex("mobile"));
-//            bgp = data1.getString(data1.getColumnIndex("bl_grp"));
-//        }
 
         MemEmail.setText("Email: " + Usrmail.getUemail());
         MemName.setText(Usrmail.getUname());

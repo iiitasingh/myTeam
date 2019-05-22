@@ -5,11 +5,21 @@ public class teams {
     byte[] image;
     String name;
     String email;
+    String desig;
 
-    public teams(byte[] image, String name ,String email) {
+    public String getDesig() {
+        return desig;
+    }
+
+    public void setDesig(String desig) {
+        this.desig = desig;
+    }
+
+    public teams(byte[] image, String name , String email, String desig) {
         this.image = image;
         this.name = name;
         this.email = email;
+        this.desig = desig;
     }
 
     public byte[] getImage() {

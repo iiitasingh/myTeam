@@ -53,7 +53,8 @@ public class Credits_Fragment extends Fragment {
                 amount = TransacDetails.getLong(2);
                 String date = TransacDetails.getString(3);
                 String type = TransacDetails.getString(4);
-                transList.add(new transaction_data(amount,date,userid,type));
+                String desc = TransacDetails.getString(5);
+                transList.add(new transaction_data(amount,date,userid,type,desc));
             }
             transAdapter = new transactionListAdapter(getActivity(), R.layout.transaction_list_template, transList);
         }

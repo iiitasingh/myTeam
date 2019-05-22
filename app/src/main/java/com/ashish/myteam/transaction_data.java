@@ -5,12 +5,22 @@ public class transaction_data {
     String date;
     String transName;
     String transType;
+    String transDesc;
 
-    public transaction_data(long amount, String date, String transName, String transType) {
+    public String getTransDesc() {
+        return transDesc;
+    }
+
+    public void setTransDesc(String transDesc) {
+        this.transDesc = transDesc;
+    }
+
+    public transaction_data(long amount, String date, String transName, String transType, String transDesc) {
         this.amount = amount;
         this.date = date;
         this.transName = transName;
         this.transType = transType;
+        this.transDesc = transDesc;
     }
 
     public long getAmount() {

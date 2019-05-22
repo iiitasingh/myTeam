@@ -51,7 +51,7 @@ public class your_team_list_adapter extends BaseAdapter {
 
     private class ViewHolder{
         ImageView memberImg;
-        TextView memberName;
+        TextView memberName,hometeamnameDesig;
     }
 
     @Override
@@ -62,9 +62,11 @@ public class your_team_list_adapter extends BaseAdapter {
         View view = layoutInflater.inflate(layout, null, false);
         holder.memberImg = view.findViewById(R.id.imgteam);
         holder.memberName = view.findViewById(R.id.hometeamname);
+        holder.hometeamnameDesig = view.findViewById(R.id.hometeamnameDesig);
         teams member = membersList.get(position);
 
         holder.memberName.setText(member.getName());
+        holder.hometeamnameDesig.setText(member.getDesig());
         byte[] foodImage = member.getImage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(foodImage, 0, foodImage.length);
         holder.memberImg.setImageBitmap(bitmap);

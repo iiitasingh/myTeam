@@ -155,20 +155,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-/*
-    public long addUser(String email, String password, String name,String nickname,String team, byte[] image){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("email",email);
-        contentValues.put("password",password);
-        contentValues.put("name",name);
-        contentValues.put("nick_name",nickname);
-        contentValues.put("team",team);
-        long res = db.insert("table_user",null,contentValues);
-        db.close();
-        return  res;
-    }
-*/
 
     public long addUser(String email, String password, String name, String nickname, String team, byte[] image) {
         SQLiteDatabase db = getWritableDatabase();
@@ -191,8 +177,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         statement.bindString(11, "");
         statement.bindString(12, "");
         statement.bindString(13, "Describe Yourself, Your experiance, skills, passion");
-        statement.bindString(14, "");
-        statement.bindString(15, "");
+        statement.bindString(14, "Designation");
+        statement.bindString(15, "Write your hobbies");
         long res2 = statement.executeInsert();
 
         statement1.clearBindings();
@@ -273,7 +259,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getteamMembers(String team_name) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String[] columns = {T2COL_2,T2COL_4, T2COL_7};
+        String[] columns = {T2COL_2,T2COL_4, T2COL_7,T2COL_16};
         String selection = T2COL_6 + "=?";
         String[] selectionArgs = {team_name};
         Cursor data = db.query(TABLE_NAME2, columns, selection, selectionArgs, null, null, null);

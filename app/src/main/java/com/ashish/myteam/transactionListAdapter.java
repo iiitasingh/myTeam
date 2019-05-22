@@ -62,7 +62,7 @@ public class transactionListAdapter extends BaseAdapter {
         if(card.getTransType().equals(type))
         {
             holder.transTypeImg.setImageResource(R.drawable.ic_up_arrow);
-            holder.transFor.setText("Paid For");
+            holder.transFor.setText(card.getTransDesc());
         }
         else {
             holder.transTypeImg.setImageResource(R.drawable.ic_down_arrow);

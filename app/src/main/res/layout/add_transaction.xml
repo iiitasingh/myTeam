@@ -84,7 +84,7 @@
                 android:focusable="false"
                 android:fontFamily="@font/mm"
                 android:hint="Description"
-                android:maxLength="30"
+                android:maxLength="60"
                 android:textAlignment="center"
                 android:textColorHint="@color/text_Color"
                 android:textCursorDrawable="@drawable/color_cursor"

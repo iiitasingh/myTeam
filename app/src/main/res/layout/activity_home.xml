@@ -23,8 +23,8 @@
         <ImageView
             android:id="@+id/Applogo"
             android:src="@drawable/ic_teamwork_32"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_gravity="start|center_vertical" />
@@ -36,10 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:fontFamily="@font/mr"
+            android:fontFamily="@font/mlight"
             android:text="@string/team"
             android:textColor="@color/white"
-            android:textSize="22sp"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
@@ -55,9 +55,9 @@
             android:id="@+id/yourteamlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="4dp">
-        </ListView>
+            android:divider="@color/transparent"
+            android:dividerHeight="0dp"
+            />
 
 
     </RelativeLayout>
